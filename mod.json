@@ -1,0 +1,24 @@
+{
+  "geode": "4.8.0",
+  "gd": {"android": "2.2074", "win": "2.2074"},
+  "version": "v1.0.0",
+  "id": "nytelyte.icon_kit_filter_and_sort",
+  "name": "Icon Kit Filter & Sort",
+  "developer": "NyteLyte",
+  "description": "Allows you to filter and sort icons in the icon kit.",
+  "dependencies": [
+    {"id": "geode.node-ids", "version": ">=v1.2.0", "importance": "required"},
+    {"id": "hiimjustin000.more_icons", "version": ">=v1.14.6", "importance": "suggested"}
+  ],
+  "repository": "https://github.com/nytelytee/geode-icon-kit-filter-and-sort.git",
+  "resources": {
+    "spritesheets": {
+      "IconKitFilterAndSortNavdotButtonSheet": ["resources/IKFS_navDotButton_mixed.png", "resources/IKFS_navDotButton_denied.png"]
+    },
+    "sprites": ["resources/IKFS_button_01.png"],
+    "files": ["resources/examples/*.png"]
+  },
+  "settings": {
+    "hide-filter-and-sort-button": {"name": "Hide Filter and Sort Button",     "type": "bool", "default": false}
+  }
+}
