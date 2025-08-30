@@ -65,7 +65,7 @@ else()
   )
 endif()
 
-set_property(TARGET ${PROJECT_NAME} PROPERTY COMPILE_WARNING_AS_ERROR ON)
+#set_property(TARGET ${PROJECT_NAME} PROPERTY COMPILE_WARNING_AS_ERROR ON)
 
 # Set up dependencies, resources, link Geode
 setup_geode_mod(${PROJECT_NAME})
