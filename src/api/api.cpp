@@ -1,12 +1,7 @@
 #include <api/api.hpp>
 #include <logic.hpp>
 #include <iconkit.hpp>
-
-#pragma warning(push)
-#pragma warning(disable: 4061)  // enum exhaustiveness
-#include <hiimjustin000.more_icons/include/MoreIcons.hpp>
-#pragma warning(pop)
-
+#include <moreicons.hpp>
 
 
 using namespace nytelyte::icon_kit_filter_and_sort;

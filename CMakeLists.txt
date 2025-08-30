@@ -60,7 +60,11 @@ if (MSVC)
     "/wd4464"  # relative include path, in geode
   )
 else()
-  target_compile_options(${PROJECT_NAME} PUBLIC "-Wall" "-Wextra" "-Wpedantic" "-Wno-dollar-in-identifier-extension")
+  target_compile_options(
+    ${PROJECT_NAME} PUBLIC
+    "-Wall" "-Wextra" "-Wpedantic"
+    "-Wno-dollar-in-identifier-extension"
+  )
 endif()
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY COMPILE_WARNING_AS_ERROR ON)

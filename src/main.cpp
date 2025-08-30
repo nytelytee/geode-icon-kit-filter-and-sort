@@ -5,6 +5,7 @@
 
 using namespace geode::prelude;
 
+/*
 static inline void dumpAuthorJson() {
   GameStatsManager* gsm = GameStatsManager::get();
   std::map<std::string, std::map<std::string, std::vector<std::string>>> intermediate;
@@ -12,7 +13,8 @@ static inline void dumpAuthorJson() {
   for (auto& [icon, count] : VANILLA_MAX_ICONS) {
     for (int i = 1; i <= count; i++) {
       // this is going to implicitly generate a 0 for all the unassigned authors, and 0 is assumed to be Robert Nicholas Christian Topala
-      int author = gsm->m_accountIDForIcon[std::pair{i, icon}];
+      std::pair<int, UnlockType> temp{i, icon};
+      int author = gsm->m_accountIDForIcon[temp];
       intermediate[ICON_NAMES[icon]][fmt::format("{}", author)].push_back(fmt::format("{}", i));
     }
   }
@@ -20,6 +22,7 @@ static inline void dumpAuthorJson() {
   matjson::Value value = intermediate;
   log::info("{}", value.dump(matjson::NO_INDENTATION));
 }
+*/
 
 
 $on_mod(Loaded) {

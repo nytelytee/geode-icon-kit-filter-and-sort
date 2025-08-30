@@ -11,10 +11,7 @@
 #include <popups/DisplayOptionsPopup.hpp>
 #include <popups/FilterAndSortPopup.hpp>
 
-#pragma warning(push)
-#pragma warning(disable: 4061)  // enum exhaustiveness
-#include <hiimjustin000.more_icons/include/MoreIcons.hpp>
-#pragma warning(pop)
+#include <moreicons.hpp>
 
 using namespace geode::prelude;
 
@@ -182,7 +179,6 @@ void HookedGJGarageLayer::recalculateNavdotMenu(int currentPage, IconType iconTy
 
   m_navDotMenu->removeAllChildren();
   m_pageButtons->removeAllObjects();
-  CCSize winSize = CCDirector::sharedDirector()->getWinSize();
   // set the gap to 0, and then manually set every per-element gap to 6.f
   // axis layout doesn't let you specifically set a cross axis gap because fuck you
   // it just uses the layout gap regardless, i think it even ignores the per-element prev/next gap

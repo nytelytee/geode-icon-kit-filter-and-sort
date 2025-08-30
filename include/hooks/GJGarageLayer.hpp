@@ -2,10 +2,16 @@
 
 #include <Geode/Geode.hpp>
 
+#ifdef _MSC_VER
 #pragma warning(push)
 #pragma warning(disable: 4265)  // non-virtual destructor
+#endif
+
 #include <Geode/modify/GJGarageLayer.hpp>
+
+#ifdef _MSC_VER
 #pragma warning(pop)
+#endif
 
 using namespace geode::prelude;
 
