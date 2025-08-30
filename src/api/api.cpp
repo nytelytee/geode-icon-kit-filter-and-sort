@@ -1,7 +1,7 @@
 #include <api/api.hpp>
 #include <logic.hpp>
 #include <iconkit.hpp>
-#include <moreicons.hpp>
+#include <hiimjustin000.more_icons/include/MoreIcons.hpp>
 
 
 using namespace nytelyte::icon_kit_filter_and_sort;

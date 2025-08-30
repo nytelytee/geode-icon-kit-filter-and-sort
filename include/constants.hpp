@@ -19,7 +19,6 @@ enum SortType { Number, LockStatus, Category, Author };
 const SortType DEFAULT_SORT_TYPES[SORT_TYPE_COUNT] = { SortType::Number, SortType::LockStatus, SortType::Category, SortType::Author };
 const bool DEFAULT_SORT_REVERSES[SORT_TYPE_COUNT] = { false, false, false, false };
 
-enum PathType { Fire = 1, Ice, Poison, Shadow, Lava, Earth, Blood, Metal, Light, Souls };
 extern std::unordered_map<SortType, std::string> SORT_TYPE_NAMES;
 
 extern std::unordered_map<UnlockType, int> VANILLA_MAX_ICONS;
@@ -30,10 +29,6 @@ extern std::vector<UnlockType> UNLOCK_TYPES_TO_CHANGE;
 #define SHOULD_CHANGE_ICON_TYPE(iconType) (std::find(ICON_TYPES_TO_CHANGE.begin(), ICON_TYPES_TO_CHANGE.end(), iconType) != ICON_TYPES_TO_CHANGE.end())
 #define SHOULD_CHANGE_UNLOCK_TYPE(unlockType) (std::find(UNLOCK_TYPES_TO_CHANGE.begin(), UNLOCK_TYPES_TO_CHANGE.end(), unlockType) != UNLOCK_TYPES_TO_CHANGE.end())
 extern std::unordered_map<UnlockType, std::string> ICON_NAMES;
-extern std::unordered_map<UnlockType, std::vector<int>> SPECIAL_UNLOCK_ORDER;
-extern std::vector<std::pair<int, UnlockType>> SHARDS_OF_POWER_UNLOCK_ORDER;
-extern std::unordered_map<PathType, std::vector<std::pair<int, UnlockType>>> PATHS_UNLOCK_ORDER;
-
 
 const float VERTICAL_BORDER_SIZE = 5.f;
 const float HORIZONTAL_BORDER_SIZE = 3.25f;

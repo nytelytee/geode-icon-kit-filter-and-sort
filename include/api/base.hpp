@@ -1,14 +1,6 @@
 #pragma once
 
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-parameter"
-#endif
 #include <Geode/loader/Dispatch.hpp>
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
-
 
 #define ICON_KIT_FILTER_AND_SORT_ID "nytelyte.icon_kit_filter_and_sort"
 

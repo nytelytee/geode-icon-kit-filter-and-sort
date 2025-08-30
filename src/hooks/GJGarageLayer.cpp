@@ -11,7 +11,7 @@
 #include <popups/DisplayOptionsPopup.hpp>
 #include <popups/FilterAndSortPopup.hpp>
 
-#include <moreicons.hpp>
+#include <hiimjustin000.more_icons/include/MoreIcons.hpp>
 
 using namespace geode::prelude;
 

@@ -10,6 +10,7 @@
     {"id": "geode.node-ids", "version": ">=v1.2.0", "importance": "required"},
     {"id": "hiimjustin000.more_icons", "version": ">=v1.14.6", "importance": "suggested"}
   ],
+  "api": {"include": ["include/api/*.hpp"]},
   "repository": "https://github.com/nytelytee/geode-icon-kit-filter-and-sort.git",
   "resources": {
     "spritesheets": {

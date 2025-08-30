@@ -5,8 +5,7 @@
 
 using namespace geode::prelude;
 
-/*
-static inline void dumpAuthorJson() {
+[[maybe_unused]] static inline void dumpAuthorJson() {
   GameStatsManager* gsm = GameStatsManager::get();
   std::map<std::string, std::map<std::string, std::vector<std::string>>> intermediate;
   
@@ -22,8 +21,6 @@ static inline void dumpAuthorJson() {
   matjson::Value value = intermediate;
   log::info("{}", value.dump(matjson::NO_INDENTATION));
 }
-*/
-
 
 $on_mod(Loaded) {
 

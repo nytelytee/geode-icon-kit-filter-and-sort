@@ -50,14 +50,12 @@ if (MSVC)
     "/Wall"
     "/wd4820"  # padding inserted
     "/wd4710"  # function not inlined
-    #"/wd4265"  # non-virtual destructor
     "/wd5045"  # disable spectre mitigation warning
     # implicitly marked as deleted
     "/wd4625"
     "/wd5026"
     "/wd4626"
     "/wd5027"
-    "/wd4464"  # relative include path, in geode
   )
 else()
   target_compile_options(

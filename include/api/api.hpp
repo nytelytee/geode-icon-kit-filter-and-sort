@@ -1,8 +1,9 @@
 #pragma once
 
 #include <Geode/loader/Mod.hpp>
-#include <api/base.hpp>
-#include <api/events.hpp>
+
+#include "base.hpp"
+#include "events.hpp"
 
 // declaration and documentation
 namespace nytelyte {
