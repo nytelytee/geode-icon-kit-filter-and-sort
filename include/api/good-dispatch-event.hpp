@@ -131,23 +131,23 @@ namespace nytelyte::event {
     }
 
     static geode::ListenerResult post(const char* id, EventParameters... args) requires std::is_void_v<EventID> { return postWithID(id, args...); }
-    static geode::ListenerResult post(EventParameters... args) requires !std::is_void_v<EventID> { return postWithID(EventImpl::ID, args...); }
+    static geode::ListenerResult post(EventParameters... args) requires (!std::is_void_v<EventID>) { return postWithID(EventImpl::ID, args...); }
 
-    static EventReturn receiveWithID(const char* id, EventParameters... args) requires !std::is_void_v<EventReturn> {
+    static EventReturn receiveWithID(const char* id, EventParameters... args) requires (!std::is_void_v<EventReturn>)  {
       EventReturn into;
       Event(id, &into, args...).post();
       return into;
     }
     static EventReturn receive(const char* id, EventParameters... args) requires std::is_void_v<EventID> { return receiveWithID(id, args...); }
-    static EventReturn receive(EventParameters... args) requires !std::is_void_v<EventID> { return receiveWithID(EventImpl::ID, args...); }
+    static EventReturn receive(EventParameters... args) requires (!std::is_void_v<EventID>)  { return receiveWithID(EventImpl::ID, args...); }
 
-    static std::pair<geode::ListenerResult, EventReturn> receiveBothWithID(const char* id, EventParameters... args) requires !std::is_void_v<EventReturn> {
+    static std::pair<geode::ListenerResult, EventReturn> receiveBothWithID(const char* id, EventParameters... args) requires (!std::is_void_v<EventReturn>)  {
       EventReturn into;
       geode::ListenerResult result = Event(id, &into, args...).post();
       return std::pair{result, into};
     }
     static std::pair<geode::ListenerResult, EventReturn> receiveBoth(const char* id, EventParameters... args) requires std::is_void_v<EventID> { return receiveBothWithID(id, args...); }
-    static std::pair<geode::ListenerResult, EventReturn> receiveBoth(EventParameters... args) requires !std::is_void_v<EventID> { return receiveBothWithID(EventImpl::ID, args...); }
+    static std::pair<geode::ListenerResult, EventReturn> receiveBoth(EventParameters... args) requires (!std::is_void_v<EventID>)  { return receiveBothWithID(EventImpl::ID, args...); }
     
     
     // listening and sending, will always return the internal geode dispatch event listener that gets created
@@ -232,7 +232,7 @@ namespace nytelyte::event {
     static Listener* listenWithIDGlobal(const char* id, Class* instance, MemberFunction<Class, geode::ListenerResult> function)
     { return new Listener(listenWithID(id, instance, function)); }
 
-    template <typename Function> requires !std::is_void_v<EventReturn> && internal::IsValidFunction<Function, EventReturn, EventParameters...>
+    template <typename Function> requires (!std::is_void_v<EventReturn> && internal::IsValidFunction<Function, EventReturn, EventParameters...>) 
     static Listener sendWithID(const char* id, geode::ListenerResult result, Function&& function) {
       return Listener(
         [result, func = std::forward<Function>(function)](EventReturn* into, EventParameters... args) {
@@ -243,7 +243,7 @@ namespace nytelyte::event {
       );
     }
     
-    template<typename Class> requires !std::is_void_v<EventReturn> && internal::IsValidMemberFunction<Class, EventReturn, EventParameters...>
+    template<typename Class> requires (!std::is_void_v<EventReturn> && internal::IsValidMemberFunction<Class, EventReturn, EventParameters...>) 
     static Listener sendWithID(const char* id, geode::ListenerResult result, Class* instance, MemberFunction<Class, EventReturn> function) {
       return Listener(
         [instance, function, result](EventReturn* into, EventParameters... args) {
@@ -263,7 +263,7 @@ namespace nytelyte::event {
     { return new Listener(sendWithID(id, result, instance, function)); }
     
     template <typename Function>
-    requires !std::is_void_v<EventReturn> && internal::IsValidFunction<Function, std::pair<geode::ListenerResult, EventReturn>, EventParameters...>
+    requires (!std::is_void_v<EventReturn> && internal::IsValidFunction<Function, std::pair<geode::ListenerResult, EventReturn>, EventParameters...>) 
     static Listener sendBothWithID(const char* id, Function&& function) {
       return Listener(
         [func = std::forward<Function>(function)](EventReturn* into, EventParameters... args) {
@@ -276,7 +276,7 @@ namespace nytelyte::event {
     }
     
     template<typename Class>
-    requires !std::is_void_v<EventReturn> && internal::IsValidMemberFunction<Class, std::pair<geode::ListenerResult, EventReturn>, EventParameters...>
+    requires (!std::is_void_v<EventReturn> && internal::IsValidMemberFunction<Class, std::pair<geode::ListenerResult, EventReturn>, EventParameters...>) 
     static Listener sendBothWithID(const char* id, Class* instance, MemberFunction<Class, std::pair<geode::ListenerResult, EventReturn>> function) {
       return Listener(
         [instance, function](EventReturn* into, EventParameters... args) {
@@ -302,7 +302,7 @@ namespace nytelyte::event {
     { return listenWithID(id, std::forward<Function>(function)); }
     
     template <typename Function> requires internal::IsValidFunction<Function, geode::ListenerResult, EventParameters...>
-    static Listener listen(Function&& function) requires !std::is_void_v<EventID>
+    static Listener listen(Function&& function) requires (!std::is_void_v<EventID>) 
     { return listenWithID(EventImpl::ID, std::forward<Function>(function)); }
     
     template <typename Class> requires internal::IsValidMemberFunction<Class, geode::ListenerResult, EventParameters...>
@@ -310,7 +310,7 @@ namespace nytelyte::event {
     { return listenWithID(id, instance, function); }
     
     template <typename Class> requires internal::IsValidMemberFunction<Class, geode::ListenerResult, EventParameters...>
-    static Listener listen(Class* instance, MemberFunction<Class, geode::ListenerResult> function) requires !std::is_void_v<EventID>
+    static Listener listen(Class* instance, MemberFunction<Class, geode::ListenerResult> function) requires (!std::is_void_v<EventID>) 
     { return listenWithID(EventImpl::ID, instance, function); }
     
     template <typename Function> requires internal::IsValidFunction<Function, geode::ListenerResult, EventParameters...>
@@ -318,7 +318,7 @@ namespace nytelyte::event {
     { return listenWithIDGlobal(id, std::forward<Function>(function)); }
     
     template <typename Function> requires internal::IsValidFunction<Function, geode::ListenerResult, EventParameters...>
-    static Listener* listenGlobal(Function&& function) requires !std::is_void_v<EventID>
+    static Listener* listenGlobal(Function&& function) requires (!std::is_void_v<EventID>) 
     { return listenWithIDGlobal(EventImpl::ID, std::forward<Function>(function)); }
     
     template <typename Class> requires internal::IsValidMemberFunction<Class, geode::ListenerResult, EventParameters...>
@@ -326,7 +326,7 @@ namespace nytelyte::event {
     { return listenWithIDGlobal(id, instance, function); }
     
     template <typename Class> requires internal::IsValidMemberFunction<Class, geode::ListenerResult, EventParameters...>
-    static Listener* listenGlobal(Class* instance, MemberFunction<Class, geode::ListenerResult> function) requires !std::is_void_v<EventID>
+    static Listener* listenGlobal(Class* instance, MemberFunction<Class, geode::ListenerResult> function) requires (!std::is_void_v<EventID>) 
     { return listenWithIDGlobal(EventImpl::ID, instance, function); }
 
     // regular send implementations
@@ -336,7 +336,7 @@ namespace nytelyte::event {
     { return sendWithID(id, result, std::forward<Function>(function)); }
     
     template <typename Function> requires internal::IsValidFunction<Function, EventReturn, EventParameters...>
-    static Listener send(geode::ListenerResult result, Function&& function) requires !std::is_void_v<EventID>
+    static Listener send(geode::ListenerResult result, Function&& function) requires (!std::is_void_v<EventID>) 
     { return sendWithID(EventImpl::ID, result, std::forward<Function>(function)); }
     
     template <typename Class> requires internal::IsValidMemberFunction<Class, EventReturn, EventParameters...>
@@ -344,7 +344,7 @@ namespace nytelyte::event {
     { return sendWithID(id, result, instance, function); }
     
     template <typename Class> requires internal::IsValidMemberFunction<Class, EventReturn, EventParameters...>
-    static Listener send(Class* instance, geode::ListenerResult result, MemberFunction<Class, EventReturn> function) requires !std::is_void_v<EventID>
+    static Listener send(Class* instance, geode::ListenerResult result, MemberFunction<Class, EventReturn> function) requires (!std::is_void_v<EventID>) 
     { return sendWithID(EventImpl::ID, result, instance, function); }
     
     template <typename Function> requires internal::IsValidFunction<Function, EventReturn, EventParameters...>
@@ -352,7 +352,7 @@ namespace nytelyte::event {
     { return sendWithIDGlobal(id, result, std::forward<Function>(function)); }
     
     template <typename Function> requires internal::IsValidFunction<Function, EventReturn, EventParameters...>
-    static Listener* sendGlobal(geode::ListenerResult result, Function&& function) requires !std::is_void_v<EventID>
+    static Listener* sendGlobal(geode::ListenerResult result, Function&& function) requires (!std::is_void_v<EventID>) 
     { return sendWithIDGlobal(EventImpl::ID, result, std::forward<Function>(function)); }
     
     template <typename Class> requires internal::IsValidMemberFunction<Class, EventReturn, EventParameters...>
@@ -360,7 +360,7 @@ namespace nytelyte::event {
     { return sendWithIDGlobal(id, result, instance, function); }
     
     template <typename Class> requires internal::IsValidMemberFunction<Class, EventReturn, EventParameters...>
-    static Listener* sendGlobal(Class* instance, geode::ListenerResult result, MemberFunction<Class, EventReturn> function) requires !std::is_void_v<EventID>
+    static Listener* sendGlobal(Class* instance, geode::ListenerResult result, MemberFunction<Class, EventReturn> function) requires (!std::is_void_v<EventID>) 
     { return sendWithIDGlobal(EventImpl::ID, result, instance, function); }
     
     // regular send both implementations
@@ -369,7 +369,7 @@ namespace nytelyte::event {
     { return sendBothWithID(id, std::forward<Function>(function)); }
     
     template <typename Function> requires internal::IsValidFunction<Function, std::pair<geode::ListenerResult, EventReturn>, EventParameters...>
-    static Listener sendBoth(Function&& function) requires !std::is_void_v<EventID>
+    static Listener sendBoth(Function&& function) requires (!std::is_void_v<EventID>) 
     { return sendBothWithID(EventImpl::ID, std::forward<Function>(function)); }
     
     template <typename Class> requires internal::IsValidMemberFunction<Class, std::pair<geode::ListenerResult, EventReturn>, EventParameters...>
@@ -377,7 +377,7 @@ namespace nytelyte::event {
     { return sendBothWithID(id, instance, function); }
     
     template <typename Class> requires internal::IsValidMemberFunction<Class, std::pair<geode::ListenerResult, EventReturn>, EventParameters...>
-    static Listener sendBoth(Class* instance, MemberFunction<Class, std::pair<geode::ListenerResult, EventReturn>> function) requires !std::is_void_v<EventID>
+    static Listener sendBoth(Class* instance, MemberFunction<Class, std::pair<geode::ListenerResult, EventReturn>> function) requires (!std::is_void_v<EventID>) 
     { return sendBothWithID(EventImpl::ID, instance, function); }
     
     template <typename Function> requires internal::IsValidFunction<Function, std::pair<geode::ListenerResult, EventReturn>, EventParameters...>
@@ -385,7 +385,7 @@ namespace nytelyte::event {
     { return sendBothWithIDGlobal(id, std::forward<Function>(function)); }
     
     template <typename Function> requires internal::IsValidFunction<Function, std::pair<geode::ListenerResult, EventReturn>, EventParameters...>
-    static Listener* sendBothGlobal(Function&& function) requires !std::is_void_v<EventID>
+    static Listener* sendBothGlobal(Function&& function) requires (!std::is_void_v<EventID>) 
     { return sendBothWithIDGlobal(EventImpl::ID, std::forward<Function>(function)); }
     
     template <typename Class> requires internal::IsValidMemberFunction<Class, std::pair<geode::ListenerResult, EventReturn>, EventParameters...>
@@ -393,7 +393,7 @@ namespace nytelyte::event {
     { return sendBothWithIDGlobal(id, instance, function); }
     
     template <typename Class> requires internal::IsValidMemberFunction<Class, std::pair<geode::ListenerResult, EventReturn>, EventParameters...>
-    static Listener* sendBothGlobal(Class* instance, MemberFunction<Class, std::pair<geode::ListenerResult, EventReturn>> function) requires !std::is_void_v<EventID>
+    static Listener* sendBothGlobal(Class* instance, MemberFunction<Class, std::pair<geode::ListenerResult, EventReturn>> function) requires (!std::is_void_v<EventID>) 
     { return sendBothWithIDGlobal(EventImpl::ID, instance, function); }
 
   };
