@@ -1,77 +1,86 @@
 #pragma once
 
-/*
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-parameter"
-#endif
-#include <Geode/loader/Dispatch.hpp>
-#include <Geode/loader/Mod.hpp>
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
-*/
-
-#include <api/base.hpp>
+#include "easy-event.hpp"
+#include "base.hpp"
 
 namespace nytelyte {
   namespace icon_kit_filter_and_sort {
     namespace events {
+      using EasyEvent = nytelyte::easy_event::EasyEvent;
 
-      using CompareVanillaIconsByNumber = SimpleDispatchEventWithResult<"nytelyte.icon_kit_filter_and_sort/compare-vanilla-icons-by-number",
-        std::optional<bool>,
-        int, int, UnlockType
-      >;
-      using CompareVanillaIconsByLockStatus = SimpleDispatchEventWithResult<"nytelyte.icon_kit_filter_and_sort/compare-vanilla-icons-by-lock-status",
-        std::optional<bool>,
-        int, int, UnlockType
-      >;
-      using CompareVanillaIconsByCategory = SimpleDispatchEventWithResult<"nytelyte.icon_kit_filter_and_sort/compare-vanilla-icons-by-category",
-        std::optional<bool>,
-        int, int, UnlockType
-      >;
-      using CompareVanillaIconsByAuthor = SimpleDispatchEventWithResult<"nytelyte.icon_kit_filter_and_sort/compare-vanilla-icons-by-author",
-        std::optional<bool>,
-        int, int, UnlockType
-      >;
-      using CompareVanillaIcons = SimpleDispatchEventWithResult<"nytelyte.icon_kit_filter_and_sort/compare-vanilla-icons-by-author",
-        bool,
-        int, int, UnlockType
-      >;
+      using CompareVanillaIconsByNumber = EasyEvent
+        ::id<"nytelyte.icon_kit_filter_and_sort/compare-vanilla-icons-by-number">
+        ::takes<int, int, UnlockType>
+        ::returns<std::optional<bool>>;
 
-      using RecalculateIconOrder = SimpleDispatchEvent<"nytelyte.icon_kit_filter_and_sort/recalculate-icon-order">;
-      using RecalculateIconOrderAndRemainOnSamePages = SimpleDispatchEvent<"nytelyte.icon_kit_filter_and_sort/recalculate-icon-order-and-remain-on-same-pages", GJGarageLayer*>;
-      using RecalculateIconOrderAndRemainOnSameSectionPages = SimpleDispatchEvent<"nytelyte.icon_kit_filter_and_sort/recalculate-icon-order-and-remain-on-same-section-pages", GJGarageLayer*>;
-      using RecalculateIconOrderAndGoToActiveIconPages = SimpleDispatchEvent<"nytelyte.icon_kit_filter_and_sort/recalculate-icon-order-and-go-to-active-icon-pages", GJGarageLayer*>;
+      using CompareVanillaIconsByLockStatus = EasyEvent
+        ::id<"nytelyte.icon_kit_filter_and_sort/compare-vanilla-icons-by-lock-status">
+        ::takes<int, int, UnlockType>
+        ::returns<std::optional<bool>>;
 
-      using RecalculateIconOrderAndTrackIcon = SimpleDispatchEventWithResult<"nytelyte.icon_kit_filter_and_sort/recalculate-icon-order-and-track-icon",
-        bool,
-        GJGarageLayer*, UnlockType, int
-      >;
-      using GiveIconAttention = SimpleDispatchEvent<"nytelyte.icon_kit_filter_and_sort/give-icon-attention", GJGarageLayer*, UnlockType, int>;
-      
-      using VanillaIconDisplayToPosition = SimpleDispatchEventWithResult<"nytelyte.icon_kit_filter_and_sort/vanilla-icon-display-to-position",
-        int,
-        UnlockType, int
-      >;
-      using VanillaIconPositionToDisplay = SimpleDispatchEventWithResult<"nytelyte.icon_kit_filter_and_sort/vanilla-icon-position-to-display",
-        int,
-        UnlockType, int
-      >;
-      
-      using GetActiveIconPage = SimpleDispatchEventWithResult<"nytelyte.icon_kit_filter_and_sort/get-active-icon-page",
-        int,
-        UnlockType
-      >;
+      using CompareVanillaIconsByCategory = EasyEvent
+        ::id<"nytelyte.icon_kit_filter_and_sort/compare-vanilla-icons-by-category">
+        ::takes<int, int, UnlockType>
+        ::returns<std::optional<bool>>;
 
-      using GetVanillaIconsInOrder = SimpleDispatchEventWithResult<"nytelyte.icon_kit_filter_and_sort/get-vanilla-icons-in-order",
-        std::vector<int>,
-        UnlockType
-      >;
-      using GetMoreIconsIconsInOrder = SimpleDispatchEventWithResult<"nytelyte.icon_kit_filter_and_sort/get-more-icons-icons-in-order",
-        std::vector<std::string>,
-        UnlockType
-      >;
+      using CompareVanillaIconsByAuthor = EasyEvent
+        ::id<"nytelyte.icon_kit_filter_and_sort/compare-vanilla-icons-by-author">
+        ::takes<int, int, UnlockType>
+        ::returns<std::optional<bool>>;
+
+      using CompareVanillaIcons = EasyEvent
+        ::id<"nytelyte.icon_kit_filter_and_sort/compare-vanilla-icons">
+        ::takes<int, int, UnlockType>
+        ::returns<bool>;
+
+      using RecalculateIconOrderAndTrackIcon = EasyEvent
+        ::id<"nytelyte.icon_kit_filter_and_sort/recalculate-icon-order-and-track-icon">
+        ::takes<GJGarageLayer*, UnlockType, int>
+        ::returns<bool>;
+
+      using VanillaIconDisplayToPosition = EasyEvent
+        ::id<"nytelyte.icon_kit_filter_and_sort/vanilla-icon-display-to-position">
+        ::takes<UnlockType, int>
+        ::returns<int>;
+
+      using VanillaIconPositionToDisplay = EasyEvent
+        ::id<"nytelyte.icon_kit_filter_and_sort/vanilla-icon-position-to-display">
+        ::takes<UnlockType, int>
+        ::returns<int>;
+
+      using GetActiveIconPage = EasyEvent
+        ::id<"nytelyte.icon_kit_filter_and_sort/get-active-icon-page">
+        ::takes<UnlockType>
+        ::returns<int>;
+
+      using GetVanillaIconsInOrder = EasyEvent
+        ::id<"nytelyte.icon_kit_filter_and_sort/get-vanilla-icons-in-order">
+        ::takes<UnlockType>
+        ::returns<std::vector<int>>;
+
+      using GetMoreIconsIconsInOrder = EasyEvent
+        ::id<"nytelyte.icon_kit_filter_and_sort/get-more-icons-icons-in-order">
+        ::takes<UnlockType>
+        ::returns<std::vector<std::string>>;
+
+      using RecalculateIconOrder = EasyEvent
+        ::id<"nytelyte.icon_kit_filter_and_sort/recalculate-icon-order">;
+
+      using RecalculateIconOrderAndRemainOnSamePages = EasyEvent
+        ::id<"nytelyte.icon_kit_filter_and_sort/recalculate-icon-order-and-remain-on-same-pages">
+        ::takes<GJGarageLayer*>;
+
+      using RecalculateIconOrderAndRemainOnSameSectionPages = EasyEvent
+        ::id<"nytelyte.icon_kit_filter_and_sort/recalculate-icon-order-and-remain-on-same-section-pages">
+        ::takes<GJGarageLayer*>;
+
+      using RecalculateIconOrderAndGoToActiveIconPages = EasyEvent
+        ::id<"nytelyte.icon_kit_filter_and_sort/recalculate-icon-order-and-go-to-active-icon-pages">
+        ::takes<GJGarageLayer*>;
+
+      using GiveIconAttention = EasyEvent
+        ::id<"nytelyte.icon_kit_filter_and_sort/give-icon-attention">
+        ::takes_tuple<std::tuple<GJGarageLayer*, UnlockType, int>>;
     }
   }
 }

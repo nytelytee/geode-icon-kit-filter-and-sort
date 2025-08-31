@@ -30,9 +30,11 @@ add_library(${PROJECT_NAME} SHARED
   src/iconkit.cpp
   src/logic.cpp
   src/main.cpp
-  src/debug.cpp
   src/api/api.cpp
 )
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+  target_sources(${PROJECT_NAME} PRIVATE src/debug.cpp)
+endif()
 include_directories(${PROJECT_NAME} PUBLIC include)
 
 
