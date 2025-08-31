@@ -34,6 +34,9 @@ jobs:
         with:
           combine: true
           target: ${{ matrix.config.target }}
+          build-config: Debug
+          export-pdb: true
+          bundle-pdb: true
 
   package:
     name: Package builds
