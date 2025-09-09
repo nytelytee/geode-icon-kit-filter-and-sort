@@ -1,3 +1,3 @@
 # Icon Kit Filter & Sort
 
-I shall add the API documentation Soon:tm:.
+Check the `include/api/api.hpp` header for API documentation, near the top.

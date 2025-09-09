@@ -19,7 +19,5 @@
     "sprites": ["resources/IKFS_button_01.png"],
     "files": ["resources/examples/*.png"]
   },
-  "settings": {
-    "hide-filter-and-sort-button": {"name": "Hide Filter and Sort Button",     "type": "bool", "default": false}
-  }
+  "settings": {"hide-filter-and-sort-button": {"name": "Hide Filter and Sort Button", "type": "bool", "default": false}}
 }
