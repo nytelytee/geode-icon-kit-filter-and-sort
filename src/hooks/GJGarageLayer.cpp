@@ -182,9 +182,8 @@ void HookedGJGarageLayer::recalculateNavdotMenu(int currentPage, IconType iconTy
   // set the gap to 0, and then manually set every per-element gap to 6.f
   // axis layout doesn't let you specifically set a cross axis gap because fuck you
   // it just uses the layout gap regardless, i think it even ignores the per-element prev/next gap
-  m_navDotMenu->setLayout(
-    RowLayout::create()->setGap(0.f)->setAxisAlignment(AxisAlignment::Center)->setGrowCrossAxis(true)
-  );
+  geode::AxisLayout* navDotMenuLayout = RowLayout::create()->setGap(0.f)->setAxisAlignment(AxisAlignment::Center)->setGrowCrossAxis(true);
+  m_navDotMenu->setLayout(navDotMenuLayout);
 
   for (size_t i = 0; i < vanillaPageCount + moreIconsPageCount; i++) {
     std::string_view spriteString;
@@ -205,14 +204,36 @@ void HookedGJGarageLayer::recalculateNavdotMenu(int currentPage, IconType iconTy
 
     float gap = 6.f;
     bool breakLine = i == vanillaPageCount - 1;
+    bool sameLine = i > vanillaPageCount;
     if (i == firstDeniedPage && firstDeniedPage && iconKitState.settings.separateAcceptedFromDenied && !iconKitState.settings.noGapBetweenAcceptedAndDenied)
       // if there was another button between those 2 buttons, and that button was invisible, this is what the gap between those 2 buttons would look like
       gap = button->getContentWidth() + 2*gap;
-
-    button->setLayoutOptions(AxisLayoutOptions::create()->setPrevGap(gap)->setBreakLine(breakLine));
+    button->setLayoutOptions(AxisLayoutOptions::create()->setPrevGap(gap)->setBreakLine(breakLine)->setSameLine(sameLine));
   }
   m_navDotMenu->updateLayout();
-  m_navDotMenu->setPositionY(25.f);
+  // the gap between vanilla pages and more icons pages to get them to be identical as when IKFS is not installed
+  // no one is going to notice this but lol
+  float gap;
+  if (moreIconsPageCount != 0) {
+    float vanillaAreaHeight = 19.8f;
+    float moreIconsAreaHeight = m_navDotMenu->getScaledContentHeight() - vanillaAreaHeight;
+    // more icons sets them like this, which technically leaves a non-zero gap by default, although it is extremely small, 0.2 units
+    float vanillaPagesPosition = 35.f;
+    float moreIconsPagesPosition = 15.f;
+    gap = vanillaPagesPosition - moreIconsPagesPosition - moreIconsAreaHeight/2.f - vanillaAreaHeight/2.f;
+  } else {
+    gap = 0.f;
+  }
+  // offset the position by half the gap, so that vanilla pages appear in the position they appear in by default
+  // hope this is correct.
+  m_navDotMenu->setPositionY(25.f + gap/2);
+  navDotMenuLayout->setGap(gap);
+  m_navDotMenu->updateLayout();
+  // more icons pages may overlap the corner pieces; by default MI has its navdot menu above the corner pieces
+  // the vanilla ones never overlap the corner pieces anyway, so it doesn't break anything if we just set the
+  // z order of the entire menu to be above the corner pieces; even if vanilla ones did sometimes overlap the
+  // corner pieces, you'd probably want them to show up above them anyway, so you can actually see the pages
+  m_navDotMenu->setZOrder(2);
 
   // more icons tries getting the first page, since that always exists in vanilla
   // it may not exist with this mod, however, so put a fake one in, it won't be visible anyway
