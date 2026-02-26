@@ -9,7 +9,7 @@ VALID_CATEGORIES = [
     "Mechanic", "1 Key Chest", "5 Key Chest", "10 Key Chest",
     "25 Key Chest", "50 Key Chest", "100 Key Chest",
     "Gold Key Chest", "Wraith Chest", "Special Chest",
-    "Supporter", "2.21"
+    "Unknown Wraith Chest", "Upcoming Gauntlets", "Supporter", "2.21"
 ]
 
 

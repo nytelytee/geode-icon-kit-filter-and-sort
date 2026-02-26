@@ -71,30 +71,32 @@ this file was handmade
   #Gauntlets:
     a gauntlet: 242
     
-    specific gauntlets, minus at the start means the
-    gauntlet is inaccessible at the time of writing.
-    this does not affect the order
+    specific gauntlets
 
     time: 138
     crystal: 139
     spike: 141
     monster: 142
-    -rune: 312
-    -spooky: 315
-    -haunted: 476
-    -acid: 467
-    -toxic: 436
+    spooky: 315
+    haunted: 476
     halloween: 326
-    -treasure: 316
-    -gem: 397
+    treasure: 316
+    gem: 397
     inferno: 244
-    -surprise: 303
     cursed: 425
     cyborg: 377
     castle: 408
-    -grave: 453
     discord: 482
     ncs i: 452
+    random: 484
+    love: 372
+
+  #Upcoming Gauntlets:
+    -rune: 312
+    -acid: 467
+    -toxic: 436
+    -surprise: 303
+    -grave: 453
 
   #Paths:
     fire: 213, 236
@@ -126,8 +128,9 @@ this file was handmade
   
   these are technically special chests, but i am making them their own category
   they could also be in the vault category, but they have different display text
-  #Wraith Chest: 210, 231, 309, 321, 343, 351, 390, 409, 440, 445, 485
-  
+  #Wraith Chest: 409, 231, 309, 485, 351, 321
+  #Unknown Wraith Chest: 210, 343, 390, 440, 445
+
   #Special Chest
     the challenge: 103
     100 chest chest: 104
@@ -137,7 +140,7 @@ this file was handmade
     zolguroth: 154
     hidden on the help menu: 160
 
-  #2.21: 156, 169, 182, 184, 187, 193, 194, 195, 197, 198, 208, 209, 211, 214, 215, 216, 219, 220, 223, 224, 234, 241, 243, 248, 251, 252, 254, 257, 260, 262, 279, 286, 288, 292, 297, 304, 305, 306, 307, 310, 311, 320, 324, 327, 332, 337, 339, 346, 347, 354, 362, 363, 364, 369, 370, 372, 375, 378, 379, 381, 387, 399, 400, 401, 411, 412, 413, 416, 417, 422, 423, 424, 427, 430, 433, 434, 435, 439, 442, 444, 447, 448, 449, 451, 454, 455, 458, 460, 462, 468, 469, 470, 472, 473, 475, 477, 479, 484
+  #2.21: 156, 169, 182, 184, 187, 193, 194, 195, 197, 198, 208, 209, 211, 214, 215, 216, 219, 220, 223, 224, 234, 241, 243, 248, 251, 252, 254, 257, 260, 262, 279, 286, 288, 292, 297, 304, 305, 306, 307, 310, 311, 320, 324, 327, 332, 337, 339, 346, 347, 354, 362, 363, 364, 369, 370, 375, 378, 379, 381, 387, 399, 400, 401, 411, 412, 413, 416, 417, 422, 423, 424, 427, 430, 433, 434, 435, 439, 442, 444, 447, 448, 449, 451, 454, 455, 458, 460, 462, 468, 469, 470, 472, 473, 475, 477, 479
 
 .Ship
 
@@ -172,7 +175,8 @@ this file was handmade
     #50 Key Chest: 82, 85, 97, 135
     #100 Key Chest: 55, 116, 132, 136, 138, 160, 169
     #Gold Key Chest: 133, 165, 139, 147
-  #Wraith Chest: 121, 146, 155, 158
+  #Wraith Chest: 121, 146
+  #Unknown Wraith Chest: 155, 158
 
   shops
     #Shop: 27
@@ -194,11 +198,15 @@ this file was handmade
 
   #Gauntlets:
     death: 49
-    -dragon: 96
-    -snake: 142
     mystery: 166
     split: 90
     ncs ii: 117
+
+  #Upcoming Gauntlets:
+    -dragon: 96
+    -snake: 142
+    -future: 102
+    -cinema: 115
 
   #Paths:
     fire: 143
@@ -216,7 +224,7 @@ this file was handmade
     gd social media: 50
     open ad chest in gd lite: 52, 53
 
-  #2.21: 54, 56, 57, 61, 67, 68, 74, 76, 84, 86, 92, 93, 95, 100, 101, 102, 104, 106, 107, 109, 113, 115, 118, 120, 124, 128, 145, 149, 151, 152, 153, 154, 157, 159, 167
+  #2.21: 54, 56, 57, 61, 67, 68, 74, 76, 84, 86, 92, 93, 95, 100, 101, 104, 106, 107, 109, 113, 118, 120, 124, 128, 145, 149, 151, 152, 153, 154, 157, 159, 167
 
 .Ball
   #Default Icons: 1
@@ -229,7 +237,7 @@ this file was handmade
     attempts: 117, 46
     jumps: 13
     stars: 9, 27, 80
-    moons: 111, 94, 118, 62
+    moons: 111, 94, 108, 118, 62
     secret coins: 2, 3, 4, 6, 14
     user coins: 16, 17, 11, 18, 29, 28
     insane: 50
@@ -255,7 +263,8 @@ this file was handmade
     #50 Key Chest: 56, 115
     #100 Key Chest: 69, 84
     #Gold Key Chest: 100, 74
-  #Wraith Chest: 63, 90, 91, 114
+  #Wraith Chest: 90, 91
+  #Unknown Wraith Chest: 63, 114
 
   #Shards
     fire: 24
@@ -276,6 +285,7 @@ this file was handmade
     forest: 67
     world: 103
     universe: 82
+    chance: 59
 
   #List Rewards: 52, 96
   #Paths:
@@ -297,7 +307,7 @@ this file was handmade
   #Creator
     likes on created level: 72
 
-  #2.21: 47, 48, 51, 59, 73, 86, 95, 97, 99, 108
+  #2.21: 47, 48, 51, 73, 86, 95, 97, 99
 
 .Bird
   #Default Icons: 1
@@ -333,7 +343,8 @@ this file was handmade
     #50 Key Chest: 87, 142, 143
     #100 Key Chest: 42, 77, 94, 106
     #Gold Key Chest: 43, 66
-  #Wraith Chest: 63, 71, 116, 138, 147
+  #Wraith Chest: 138, 63, 71, 57
+  #Unknown Wraith Chest: 116, 147
 
   #Shards
     poison: 20
@@ -360,7 +371,11 @@ this file was handmade
 
     water: 137
     galaxy: 119
-    -space: 133
+    space: 133
+  
+  #Upcoming Gauntlets:
+    -witch: 41
+    -utopia: 120
 
   #Paths:
     fire: 79
@@ -374,7 +389,7 @@ this file was handmade
 
   #Daily Levels: 91
 
-  #2.21: 41, 44, 46, 48, 49, 50, 51, 54, 55, 57, 59, 60, 62, 65, 68, 69, 70, 72, 76, 82, 88, 89, 90, 92, 96, 98, 101, 105, 109, 110, 111, 112, 113, 114, 115, 120, 122, 124, 125, 128, 129, 130, 131, 134, 139, 145
+  #2.21: 44, 46, 48, 49, 50, 51, 54, 55, 59, 60, 62, 65, 68, 69, 70, 72, 76, 82, 88, 89, 90, 92, 96, 98, 101, 105, 109, 110, 111, 112, 113, 114, 115, 122, 124, 125, 128, 129, 130, 131, 134, 139, 145
 
 .Dart
 
@@ -424,8 +439,8 @@ this file was handmade
     #50 Key Chest: 79, 96
     #100 Key Chest: 57, 71
     #Gold Key Chest: 95, 88
-  #Wraith Chest: 44, 55, 83, 92
-
+  #Wraith Chest: 92
+  #Unknown Wraith Chest: 44, 55, 83
   shops
     #Shop: 21, 35, 38
     #Secret Shop: 18, 78
@@ -435,11 +450,13 @@ this file was handmade
 
   #Gauntlets:
     15 gauntlets: 74
-
+    
+  #Upcoming Gauntlets:
     -potion: 94
-    fantasy: 90
-    -christmas: 63
     -temple: 49
+
+    fantasy: 90
+    christmas: 63
 
   #List Rewards: 89
   #2.21: 39, 40, 48, 61, 67, 69, 70
@@ -523,9 +540,10 @@ this file was handmade
     #50 Key Chest: 47, 62
     #100 Key Chest: 41, 48, 59, 61
     #Gold Key Chest: 33, 31
-  #Wraith Chest: 40
+  #Unknown Wraith Chest: 40
   #Gauntlets:
     demon: 10
+  #Upcoming Gauntlets:
     -spider: 67
   shops
     #Shop: 2, 18
@@ -594,6 +612,7 @@ this file was handmade
   #Diamond Shop: 5
 
   #Gauntlets
-  -cosmos: 7
+  cosmos: 7
   
-  #Wraith Chest: 6, 8
+  #Wraith Chest: 8
+  #Unknown Wraith Chest: 6
