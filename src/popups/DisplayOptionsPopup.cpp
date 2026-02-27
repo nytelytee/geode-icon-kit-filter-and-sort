@@ -12,7 +12,7 @@
 using namespace geode::prelude;
 
 void DisplayOptionsPopup::onClose(CCObject *sender) {
-  Popup<FilterAndSortPopup *>::onClose(sender);
+  Popup::onClose(sender);
   if (parentPopup) parentPopup->refreshMenuState();
 };
 
@@ -75,7 +75,8 @@ void DisplayOptionsPopup::addOptionInfo(int tag, const char* description) {
   m_buttonMenu->addChild(infoButton);
 }
 
-bool DisplayOptionsPopup::setup(FilterAndSortPopup *parent) {
+bool DisplayOptionsPopup::init(FilterAndSortPopup *parent) {
+  if (!Popup::init(260.f, 240.f)) return false;
   parentPopup = parent;
 
   this->setTitle("Icon Kit Display Options");
@@ -150,10 +151,10 @@ bool DisplayOptionsPopup::setup(FilterAndSortPopup *parent) {
 
 DisplayOptionsPopup* DisplayOptionsPopup::create(FilterAndSortPopup *parent) {
     auto ret = new DisplayOptionsPopup();
-    if (ret && ret->initAnchored(260.f, 240.f, parent)) {
+    if (ret && ret->init(parent)) {
         ret->autorelease();
         return ret;
     }
-    CC_SAFE_DELETE(ret);
+    delete ret;
     return nullptr;
 }

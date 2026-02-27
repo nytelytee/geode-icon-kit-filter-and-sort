@@ -7,7 +7,7 @@ class FilterAndSortPopup;
 
 using namespace geode::prelude;
 
-class FilterPopup : public Popup<FilterAndSortPopup *> {
+class FilterPopup : public Popup {
 protected:
 
   CCMenu *m_actionButtonMenu;
@@ -17,10 +17,10 @@ protected:
   CCSize m_buttonMenuSize;
   FilterAndSortPopup *parentPopup;
 
-  virtual void onTopMenuButton(CCObject *) = 0;
+  virtual void onActionMenuButton(CCObject *) = 0;
   void onClose(CCObject *) override;
 
-  bool setup(FilterAndSortPopup *parent) override { parentPopup = parent; preCustomSetup(); customSetup(); postCustomSetup(); return true; }
+  bool init(float, float, FilterAndSortPopup *);
 
   void preCustomSetup();
   virtual void customSetup() = 0;

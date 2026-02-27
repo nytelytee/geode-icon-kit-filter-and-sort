@@ -22,13 +22,13 @@ enum TogglerType { Locked, Unlocked };
 
 void FilterAndSortPopup::onActionButton(CCObject *sender) {
   CCMenuItemSpriteExtra *button = static_cast<CCMenuItemSpriteExtra *>(sender);
-  if (button->getTag() == ActionButtonType::Cancel) return Popup<>::onClose(sender);
+  if (button->getTag() == ActionButtonType::Cancel) return Popup::onClose(sender);
   GJGarageLayer* garage = CCScene::get()->getChildByType<GJGarageLayer>(0);
   if (!garage) return;
   recalculateIconOrderAndRemainOnSamePages(garage);
   garage->selectTab(garage->m_iconType);
   Mod::get()->setSavedValue<IconKitSettings>("iconKitSettings", iconKitState.settings);
-  Popup<>::onClose(sender);
+  Popup::onClose(sender);
 }
 
 void FilterAndSortPopup::refreshMenuState() {
@@ -92,7 +92,8 @@ void FilterAndSortPopup::onToggle(CCObject *sender) {
   }
 }
 
-bool FilterAndSortPopup::setup() {
+bool FilterAndSortPopup::init() {
+  if (!Popup::init(280.f, 170.f)) return false;
   iconKitState.pendingSettings = iconKitState.settings;
   this->setTitle("Filter & Sort");
   float separator_height = 1;
@@ -288,10 +289,10 @@ bool FilterAndSortPopup::setup() {
 
 FilterAndSortPopup* FilterAndSortPopup::create() {
     auto ret = new FilterAndSortPopup();
-    if (ret && ret->initAnchored(280, 170)) {
+    if (ret && ret->init()) {
         ret->autorelease();
         return ret;
     }
-    CC_SAFE_DELETE(ret);
+    delete ret;
     return nullptr;
 }

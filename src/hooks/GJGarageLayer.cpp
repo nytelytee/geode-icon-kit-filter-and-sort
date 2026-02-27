@@ -11,7 +11,7 @@
 #include <popups/DisplayOptionsPopup.hpp>
 #include <popups/FilterAndSortPopup.hpp>
 
-#include <hiimjustin000.more_icons/include/MoreIcons.hpp>
+//#include <hiimjustin000.more_icons/include/MoreIcons.hpp>
 
 using namespace geode::prelude;
 
@@ -99,7 +99,8 @@ void HookedGJGarageLayer::defaultToggleNavigationMenus(IconType iconType) {
   int vanillaIconCount = GameManager::get()->countForType(iconType);
   int vanillaPageCount = (vanillaIconCount + 35)/36;
 
-  int moreIconsIconCount = int(MoreIcons::getIcons(iconType).size());
+  //int moreIconsIconCount = int(MoreIcons::getIcons(iconType).size());
+  int moreIconsIconCount = 0;
   int moreIconsPageCount = (moreIconsIconCount + 35)/36;
   
   int totalIconCount = vanillaIconCount + moreIconsIconCount;
@@ -122,7 +123,8 @@ void HookedGJGarageLayer::setupPage(int page, IconType iconType) {
     // we're not modifying the sorting order of these anyway, at least not now, in the future if we add More Icons filtering/sorting,
     // the special page (and death effects, if MI implements them) may be filterable/sortable, even if it's just More Icons icons
     // that we are filtering/sorting
-    int moreIconsIcons = int(MoreIcons::getIcons(m_iconType).size());
+    //int moreIconsIcons = int(MoreIcons::getIcons(m_iconType).size());
+    int moreIconsIcons = 0;
     int moreIconsPages = (moreIconsIcons + 35)/36;
     toggleNavigationMenus(bool(moreIconsPages), bool(moreIconsPages));
     return;
@@ -174,7 +176,8 @@ void HookedGJGarageLayer::recalculateNavdotMenu(int currentPage, IconType iconTy
   
   size_t vanillaPageCount = size_t((GameManager::get()->countForType(iconType)+35)/36);
 
-  int moreIconsIcons = int(MoreIcons::getIcons(m_iconType).size());
+  //int moreIconsIcons = int(MoreIcons::getIcons(m_iconType).size());
+  int moreIconsIcons = 0;
   int moreIconsPageCount = (moreIconsIcons + 35)/36;
 
   m_navDotMenu->removeAllChildren();

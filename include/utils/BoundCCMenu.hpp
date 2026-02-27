@@ -20,7 +20,7 @@ public:
   static BoundCCMenu *create(CCRect worldSpaceBound) {
     auto a = new BoundCCMenu();
     if (a && a->initWithRect(worldSpaceBound)){ a->autorelease(); return a; }
-    CC_SAFE_DELETE(a);
+    delete a;
     return nullptr;
   }
 };

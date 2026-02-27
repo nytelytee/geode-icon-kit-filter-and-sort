@@ -11,7 +11,7 @@ protected:
   void toggleCategory(CCObject *sender);
   void addCategory(int, std::string);
 
-  void onTopMenuButton(CCObject *) override;
+  void onActionMenuButton(CCObject *) override;
   void customSetup() override;
 
 public:

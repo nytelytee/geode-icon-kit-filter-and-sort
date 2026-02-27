@@ -6,7 +6,7 @@ class FilterAndSortPopup;
 
 using namespace geode::prelude;
 
-class SortPopup : public Popup<FilterAndSortPopup *> {
+class SortPopup : public Popup {
 protected:
 
   CCNode *m_sortingList;
@@ -15,7 +15,7 @@ protected:
   static const GLubyte EVEN_BACKGROUND_OPACITY = 32;
   static const GLubyte ODD_BACKGROUND_OPACITY = 16;
 
-  bool setup(FilterAndSortPopup *) override;
+  bool init(FilterAndSortPopup *);
 
   void onArrow(CCObject *);
   void onReverseSortOrder(CCObject *);

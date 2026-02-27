@@ -3,7 +3,7 @@
 #include <constants.hpp>
 #include <logic.hpp>
 #include <iconkit.hpp>
-#include <hiimjustin000.more_icons/include/MoreIcons.hpp>
+//#include <hiimjustin000.more_icons/include/MoreIcons.hpp>
 
 
 using namespace geode::prelude;
@@ -131,7 +131,8 @@ void remainOnSameSectionPageForIconType(
   if (garage->m_iconPages[iconType] == -1) return;
   auto [newLastAcceptedPage, newFirstDeniedPage, newMaxVanillaPage] = getPageInfoForType(ICON_TO_UNLOCK[iconType]);
   int currentPage = garage->m_iconPages[iconType];
-  int moreIconsIcons = int(MoreIcons::getIcons(iconType).size());
+  //int moreIconsIcons = int(MoreIcons::getIcons(iconType).size());
+  int moreIconsIcons = 0;
 
   // 0 = blank, 1 = accepted, 2 = denied, 3 = more icons
   // the mixed page (magenta) counts as an accepted section type when getting the section type (so, if we are on it specifically it counts as section type 1)
@@ -201,7 +202,8 @@ void recalculateIconOrderAndRemainOnSamePages(GJGarageLayer* garage) {
         (acceptedCount + deniedCount + 35)/36
       )
     );
-    int moreIconsPageCount = (int(MoreIcons::getIcons(UNLOCK_TO_ICON[unlockType]).size()) + 35)/36;
+    //int moreIconsPageCount = (int(MoreIcons::getIcons(UNLOCK_TO_ICON[unlockType]).size()) + 35)/36;
+    int moreIconsPageCount = 0;
     if (garage->m_iconPages[UNLOCK_TO_ICON[unlockType]] > vanillaPageCount + moreIconsPageCount - 1)
       garage->m_iconPages[UNLOCK_TO_ICON[unlockType]] = vanillaPageCount + moreIconsPageCount - 1;
   }
@@ -351,10 +353,10 @@ int getActiveIconPage(IconType iconType) {
   Mod* separateDualIcons = Loader::get()->getLoadedMod("weebify.separate_dual_icons");
   bool secondPlayerSelected = separateDualIcons && separateDualIcons->getSavedValue("2pselected", false);
 
-  if (IconInfo* icon = MoreIcons::getIcon(iconType, secondPlayerSelected)) {
+  /*if (IconInfo* icon = MoreIcons::getIcon(iconType, secondPlayerSelected)) {
     int moreIconsActiveIconPosition = 36*((GameManager::get()->countForType(iconType) + 35)/36) + int(icon - MoreIcons::getIcons(iconType)[0]) + 1;
     return (moreIconsActiveIconPosition - 1)/36;
-  } else if (secondPlayerSelected) {
+  } else*/ if (secondPlayerSelected) {
     int separateDualIconsActiveIconPosition;
     switch(iconType) {
       case    IconType::Cube: separateDualIconsActiveIconPosition = separateDualIcons->getSavedValue<int>("cube", 1); break;

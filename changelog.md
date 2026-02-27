@@ -1,3 +1,6 @@
+# v1.1.0
+- update to 2.2081
+
 # v1.0.3
 - macOS & iOS support (thank you, hiimjasmine00)
 

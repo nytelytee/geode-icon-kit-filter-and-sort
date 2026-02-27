@@ -13,7 +13,7 @@
 using namespace geode::prelude;
 
 void SortPopup::onClose(CCObject *sender) {
-  Popup<FilterAndSortPopup *>::onClose(sender);
+  Popup::onClose(sender);
   parentPopup->refreshMenuState();
 };
 
@@ -83,7 +83,8 @@ void SortPopup::onReverseSortOrder(CCObject *sender) {
     item->getChildByIndex<SortIconButtonSprite>(0)->setBG("GJ_button_04.png", false);
 }
 
-bool SortPopup::setup(FilterAndSortPopup *parent) {
+bool SortPopup::init(FilterAndSortPopup *parent) {
+  if (!Popup::init(250, 200)) return false;
   parentPopup = parent;
   this->setTitle("Sort");
   float separator_height = 1;
@@ -269,10 +270,10 @@ bool SortPopup::setup(FilterAndSortPopup *parent) {
 
 SortPopup* SortPopup::create(FilterAndSortPopup *parent) {
     auto ret = new SortPopup();
-    if (ret && ret->initAnchored(250, 200, parent)) {
+    if (ret && ret->init(parent)) {
         ret->autorelease();
         return ret;
     }
-    CC_SAFE_DELETE(ret);
+    delete ret;
     return nullptr;
 }

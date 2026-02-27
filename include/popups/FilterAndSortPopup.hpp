@@ -8,7 +8,7 @@ class DisplayOptionsPopup;
 
 using namespace geode::prelude;
 
-class FilterAndSortPopup : public Popup<> {
+class FilterAndSortPopup : public Popup {
 protected:
 
   friend FilterPopup;
@@ -19,7 +19,7 @@ protected:
   CCMenu *m_topMenu;
   CCMenu *m_actionMenu;
 
-  bool setup() override;
+  bool init();
 
   void onToggle(CCObject *);
   void onMenuButton(CCObject *);

@@ -12,7 +12,7 @@ protected:
   void goToAuthorProfile(CCObject *);
   void addAuthor(int, int);
 
-  void onTopMenuButton(CCObject *) override;
+  void onActionMenuButton(CCObject *) override;
   void customSetup() override;
 
 public:

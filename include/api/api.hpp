@@ -81,83 +81,83 @@ namespace nytelyte {
       
     inline geode::Result<std::optional<bool>> compareVanillaIconsByNumber(int a, int b, UnlockType unlockType) {
       if (!geode::Loader::get()->isModLoaded(ICON_KIT_FILTER_AND_SORT_ID)) return geode::Err("Mod not loaded");
-      return geode::Ok(events::CompareVanillaIconsByNumber::receive(a, b, unlockType));
+      return geode::Ok(events::CompareVanillaIconsByNumber::sendAndReceive(a, b, unlockType));
     }
     
     inline geode::Result<std::optional<bool>> compareVanillaIconsByLockStatus(int a, int b, UnlockType unlockType) {
       if (!geode::Loader::get()->isModLoaded(ICON_KIT_FILTER_AND_SORT_ID)) return geode::Err("Mod not loaded");
-      return geode::Ok(events::CompareVanillaIconsByLockStatus::receive(a, b, unlockType));
+      return geode::Ok(events::CompareVanillaIconsByLockStatus::sendAndReceive(a, b, unlockType));
     }
     
     inline geode::Result<std::optional<bool>> compareVanillaIconsByCategory(int a, int b, UnlockType unlockType) {
       if (!geode::Loader::get()->isModLoaded(ICON_KIT_FILTER_AND_SORT_ID)) return geode::Err("Mod not loaded");
-      return geode::Ok(events::CompareVanillaIconsByCategory::receive(a, b, unlockType));
+      return geode::Ok(events::CompareVanillaIconsByCategory::sendAndReceive(a, b, unlockType));
     }
     
     inline geode::Result<std::optional<bool>> compareVanillaIconsByAuthor(int a, int b, UnlockType unlockType) {
       if (!geode::Loader::get()->isModLoaded(ICON_KIT_FILTER_AND_SORT_ID)) return geode::Err("Mod not loaded");
-      return geode::Ok(events::CompareVanillaIconsByAuthor::receive(a, b, unlockType));
+      return geode::Ok(events::CompareVanillaIconsByAuthor::sendAndReceive(a, b, unlockType));
     }
     
     inline geode::Result<bool> compareVanillaIcons(int a, int b, UnlockType unlockType) {
       if (!geode::Loader::get()->isModLoaded(ICON_KIT_FILTER_AND_SORT_ID)) return geode::Err("Mod not loaded");
-      return geode::Ok(events::CompareVanillaIcons::receive(a, b, unlockType));
+      return geode::Ok(events::CompareVanillaIcons::sendAndReceive(a, b, unlockType));
     }
     
     inline geode::Result<> recalculateIconOrder() {
       if (!geode::Loader::get()->isModLoaded(ICON_KIT_FILTER_AND_SORT_ID)) return geode::Err("Mod not loaded");
-      events::RecalculateIconOrder::post();
+      events::RecalculateIconOrder::send();
       return geode::Ok();
     }
     
     inline geode::Result<> recalculateIconOrderAndRemainOnSamePages(GJGarageLayer* garage) {
       if (!geode::Loader::get()->isModLoaded(ICON_KIT_FILTER_AND_SORT_ID)) return geode::Err("Mod not loaded");
-      events::RecalculateIconOrderAndRemainOnSamePages::post(garage);
+      events::RecalculateIconOrderAndRemainOnSamePages::send(garage);
       return geode::Ok();
     }
 
     inline geode::Result<> recalculateIconOrderAndRemainOnSameSectionPages(GJGarageLayer* garage) {
       if (!geode::Loader::get()->isModLoaded(ICON_KIT_FILTER_AND_SORT_ID)) return geode::Err("Mod not loaded");
-      events::RecalculateIconOrderAndRemainOnSameSectionPages::post(garage);
+      events::RecalculateIconOrderAndRemainOnSameSectionPages::send(garage);
       return geode::Ok();
     }
     
     inline geode::Result<bool> recalculateIconOrderAndTrackIcon(GJGarageLayer* garage, UnlockType unlockType, int iconID) {
       if (!geode::Loader::get()->isModLoaded(ICON_KIT_FILTER_AND_SORT_ID)) return geode::Err("Mod not loaded");
-      return geode::Ok(events::RecalculateIconOrderAndTrackIcon::receive(garage, unlockType, iconID));
+      return geode::Ok(events::RecalculateIconOrderAndTrackIcon::sendAndReceive(garage, unlockType, iconID));
     }
     
     inline geode::Result<> recalculateIconOrderAndGoToActiveIconPages(GJGarageLayer* garage) {
       if (!geode::Loader::get()->isModLoaded(ICON_KIT_FILTER_AND_SORT_ID)) return geode::Err("Mod not loaded");
-      events::RecalculateIconOrderAndGoToActiveIconPages::post(garage);
+      events::RecalculateIconOrderAndGoToActiveIconPages::send(garage);
       return geode::Ok();
     }
 
     inline geode::Result<> giveIconAttention(GJGarageLayer* garage, UnlockType unlockType, int iconID) {
       if (!geode::Loader::get()->isModLoaded(ICON_KIT_FILTER_AND_SORT_ID)) return geode::Err("Mod not loaded");
-      events::GiveIconAttention::post(garage, unlockType, iconID);
+      events::GiveIconAttention::send(garage, unlockType, iconID);
       return geode::Ok();
     }
     
     inline geode::Result<int> vanillaIconPositionToDisplay(UnlockType unlockType, int iconID) {
       if (!geode::Loader::get()->isModLoaded(ICON_KIT_FILTER_AND_SORT_ID)) return geode::Err("Mod not loaded");
-      return geode::Ok(events::VanillaIconDisplayToPosition::receive(unlockType, iconID));
+      return geode::Ok(events::VanillaIconDisplayToPosition::sendAndReceive(unlockType, iconID));
     }
     
     inline geode::Result<int> vanillaIconDisplayToPosition(UnlockType unlockType, int iconID) {
       if (!geode::Loader::get()->isModLoaded(ICON_KIT_FILTER_AND_SORT_ID)) return geode::Err("Mod not loaded");
-      return geode::Ok(events::VanillaIconPositionToDisplay::receive(unlockType, iconID));
+      return geode::Ok(events::VanillaIconPositionToDisplay::sendAndReceive(unlockType, iconID));
     }
     
     inline geode::Result<int> getActiveIconPage(UnlockType unlockType) {
       if (!geode::Loader::get()->isModLoaded(ICON_KIT_FILTER_AND_SORT_ID)) return geode::Err("Mod not loaded");
-      return geode::Ok(events::GetActiveIconPage::receive(unlockType));
+      return geode::Ok(events::GetActiveIconPage::sendAndReceive(unlockType));
     }
 
     inline geode::Result<std::vector<Icon>> getAllIconsInOrder(UnlockType unlockType) {
       if (!geode::Loader::get()->isModLoaded(ICON_KIT_FILTER_AND_SORT_ID)) return geode::Err("Mod not loaded");
-      std::vector<int> vanillaIcons = events::GetVanillaIconsInOrder::receive(unlockType);
-      std::vector<std::string> moreIconsIcons = events::GetMoreIconsIconsInOrder::receive(unlockType);
+      std::vector<int> vanillaIcons = events::GetVanillaIconsInOrder::sendAndReceive(unlockType);
+      std::vector<std::string> moreIconsIcons = events::GetMoreIconsIconsInOrder::sendAndReceive(unlockType);
       std::vector<Icon> result;
       for (int icon : vanillaIcons) result.push_back(Icon{icon});
       for (std::string& icon : moreIconsIcons) result.push_back(Icon{icon});
@@ -166,12 +166,12 @@ namespace nytelyte {
 
     inline geode::Result<std::vector<int>> getVanillaIconsInOrder(UnlockType unlockType) {
       if (!geode::Loader::get()->isModLoaded(ICON_KIT_FILTER_AND_SORT_ID)) return geode::Err("Mod not loaded");
-      return geode::Ok(events::GetVanillaIconsInOrder::receive(unlockType));
+      return geode::Ok(events::GetVanillaIconsInOrder::sendAndReceive(unlockType));
     }
     
     inline geode::Result<std::vector<std::string>> getMoreIconsIconsInOrder(UnlockType unlockType) {
       if (!geode::Loader::get()->isModLoaded(ICON_KIT_FILTER_AND_SORT_ID)) return geode::Err("Mod not loaded");
-      return geode::Ok(events::GetMoreIconsIconsInOrder::receive(unlockType));
+      return geode::Ok(events::GetMoreIconsIconsInOrder::sendAndReceive(unlockType));
     }
 
   }

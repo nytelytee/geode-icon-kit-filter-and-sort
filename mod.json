@@ -1,17 +1,17 @@
 {
-  "geode": "4.8.0",
-  "gd": {"android": "2.2074", "win": "2.2074", "mac": "2.2074", "ios": "2.2074"},
-  "version": "v1.0.3",
+  "geode": "5.1.0",
+  "gd": {"android": "2.2081", "win": "2.2081", "mac": "2.2081", "ios": "2.2081"},
+  "version": "v1.1.0",
   "id": "nytelyte.icon_kit_filter_and_sort",
   "name": "Icon Kit Filter & Sort",
   "developer": "NyteLyte",
   "description": "Allows you to filter and sort icons in the icon kit.",
-  "dependencies": [
-    {"id": "geode.node-ids", "version": ">=v1.2.0", "importance": "required"},
-    {"id": "hiimjustin000.more_icons", "version": ">=v1.14.6", "importance": "suggested"}
-  ],
+  "dependencies": {
+	  "geode.devtools": {"version": ">=1.13.1", "required": false},
+    "geode.node-ids": {"version": ">=1.22.0", "required": true}
+  },
   "api": {"include": ["include/api/*.hpp"]},
-  "repository": "https://github.com/nytelytee/geode-icon-kit-filter-and-sort.git",
+  "links": {"source": "https://github.com/nytelytee/geode-icon-kit-filter-and-sort.git"},
   "resources": {
     "spritesheets": {
       "IconKitFilterAndSortNavdotButtonSheet": ["resources/IKFS_navDotButton_mixed.png", "resources/IKFS_navDotButton_denied.png"]

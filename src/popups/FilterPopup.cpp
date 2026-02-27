@@ -11,7 +11,7 @@
 using namespace geode::prelude;
 
 void FilterPopup::onClose(CCObject *sender) {
-  Popup<FilterAndSortPopup *>::onClose(sender);
+  Popup::onClose(sender);
   parentPopup->refreshMenuState();
 };
 
@@ -60,25 +60,25 @@ void FilterPopup::preCustomSetup() {
   m_actionButtonMenu->setLayout(RowLayout::create()->setAxisAlignment(AxisAlignment::Even));
   m_actionButtonMenu->setContentSize({usableSize.width, 0});
 
-  ButtonSprite *topMenuAllButtonSprite = ButtonSprite::create("All", "goldFont.fnt", "GJ_button_01.png", 1);
-  ButtonSprite *topMenuNoneButtonSprite = ButtonSprite::create("None", "goldFont.fnt", "GJ_button_06.png", 1);
-  ButtonSprite *topMenuInvertButtonSprite = ButtonSprite::create("Invert", "goldFont.fnt", "GJ_button_03.png", 1);
+  ButtonSprite *actionMenuAllButtonSprite = ButtonSprite::create("All", "goldFont.fnt", iconKitState.pendingSettings.invert ? "GJ_button_06.png" : "GJ_button_01.png", 1);
+  ButtonSprite *actionMenuNoneButtonSprite = ButtonSprite::create("None", "goldFont.fnt", iconKitState.pendingSettings.invert ? "GJ_button_01.png" : "GJ_button_06.png", 1);
+  ButtonSprite *actionMenuInvertButtonSprite = ButtonSprite::create("Invert", "goldFont.fnt", "GJ_button_03.png", 1);
   
-  CCMenuItemSpriteExtra *topMenuAllButton = CCMenuItemSpriteExtra::create(topMenuAllButtonSprite, this, menu_selector(FilterPopup::onTopMenuButton));
-  CCMenuItemSpriteExtra *topMenuNoneButton = CCMenuItemSpriteExtra::create(topMenuNoneButtonSprite, this, menu_selector(FilterPopup::onTopMenuButton));
-  CCMenuItemSpriteExtra *topMenuInvertButton = CCMenuItemSpriteExtra::create(topMenuInvertButtonSprite, this, menu_selector(FilterPopup::onTopMenuButton));
+  CCMenuItemSpriteExtra *actionMenuAllButton = CCMenuItemSpriteExtra::create(actionMenuAllButtonSprite, this, menu_selector(FilterPopup::onActionMenuButton));
+  CCMenuItemSpriteExtra *actionMenuNoneButton = CCMenuItemSpriteExtra::create(actionMenuNoneButtonSprite, this, menu_selector(FilterPopup::onActionMenuButton));
+  CCMenuItemSpriteExtra *actionMenuInvertButton = CCMenuItemSpriteExtra::create(actionMenuInvertButtonSprite, this, menu_selector(FilterPopup::onActionMenuButton));
 
-  topMenuAllButton->setTag(0);
-  topMenuNoneButton->setTag(1);
-  topMenuInvertButton->setTag(2);
+  actionMenuAllButton->setTag(0);
+  actionMenuNoneButton->setTag(1);
+  actionMenuInvertButton->setTag(2);
 
-  topMenuAllButton->setLayoutOptions(AxisLayoutOptions::create()->setScaleLimits({}, (delta - separatorHeight - VERTICAL_BORDER_SIZE)/topMenuAllButton->getContentHeight()));
-  topMenuNoneButton->setLayoutOptions(AxisLayoutOptions::create()->setScaleLimits({}, (delta - separatorHeight - VERTICAL_BORDER_SIZE)/topMenuNoneButton->getContentHeight()));
-  topMenuInvertButton->setLayoutOptions(AxisLayoutOptions::create()->setScaleLimits({}, (delta - separatorHeight - VERTICAL_BORDER_SIZE)/topMenuInvertButton->getContentHeight()));
+  actionMenuAllButton->setLayoutOptions(AxisLayoutOptions::create()->setScaleLimits({}, (delta - separatorHeight - VERTICAL_BORDER_SIZE)/actionMenuAllButton->getContentHeight()));
+  actionMenuNoneButton->setLayoutOptions(AxisLayoutOptions::create()->setScaleLimits({}, (delta - separatorHeight - VERTICAL_BORDER_SIZE)/actionMenuNoneButton->getContentHeight()));
+  actionMenuInvertButton->setLayoutOptions(AxisLayoutOptions::create()->setScaleLimits({}, (delta - separatorHeight - VERTICAL_BORDER_SIZE)/actionMenuInvertButton->getContentHeight()));
   
-  m_actionButtonMenu->addChild(topMenuAllButton);
-  m_actionButtonMenu->addChild(topMenuNoneButton);
-  m_actionButtonMenu->addChild(topMenuInvertButton);
+  m_actionButtonMenu->addChild(actionMenuAllButton);
+  m_actionButtonMenu->addChild(actionMenuNoneButton);
+  m_actionButtonMenu->addChild(actionMenuInvertButton);
 
   m_actionButtonMenu->updateLayout();
   // offset necessary to place it in the center of the remaining space at the bottom
@@ -102,3 +102,13 @@ void FilterPopup::preCustomSetup() {
   m_buttonMenu->setPosition({delta/2, 0});
 
 }
+
+bool FilterPopup::init(float width, float height, FilterAndSortPopup *parent) {
+  if (!Popup::init(width, height)) return false;
+  parentPopup = parent;
+  preCustomSetup();
+  customSetup();
+  postCustomSetup();
+  return true;
+}
+

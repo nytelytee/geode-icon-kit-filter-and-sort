@@ -1,8 +1,6 @@
 #include <Geode/loader/GameEvent.hpp>
 
-// i copied the header straight from the Prevter's PR, which hasn't been merged yet
-// if you want to use this feature, use the build from that PR
-#include <debug/devtools-api.hpp>
+#include <geode.devtools/include/API.hpp>
 
 #include <iconkit.hpp>
 #include <constants.hpp>
@@ -21,7 +19,7 @@ $on_mod(Loaded) {
                 GameManager::get()->resetAchievement("geometry.ach.mdrate");
             });
             devtools::button("Track icon 0", [node]{
-                nytelyte::icon_kit_filter_and_sort::events::GiveIconAttention::post(node, UnlockType::Cube, 1);
+                nytelyte::icon_kit_filter_and_sort::events::GiveIconAttention::send(node, UnlockType::Cube, 1);
             });
 
         });

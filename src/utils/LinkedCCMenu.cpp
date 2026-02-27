@@ -85,11 +85,11 @@ bool LinkedCCMenu::linkChildren(CCNode *node, int depth) {
   if (!depth) return false;
   if (!node) return false;
   bool anyLinked = false;
-  CCObject *childObject;
-  CCARRAY_FOREACH(node->getChildren(), childObject) {
+
+  for(CCNode* childObject : CCArrayExt<CCNode*>(node->getChildren())) {
     if (CCMenu *childMenu = typeinfo_cast<CCMenu *>(childObject))
       anyLinked |= link(childMenu);
-    anyLinked |= linkChildren(static_cast<CCNode *>(childObject), depth-1);
+    anyLinked |= linkChildren(childObject, depth-1);
   }
   return anyLinked;
 }
@@ -97,11 +97,10 @@ bool LinkedCCMenu::linkChildren(CCNode *node, int depth) {
 bool LinkedCCMenu::unlinkChildren(CCNode *node, int depth) {
   if (!node) return false;
   bool anyUnlinked = false;
-  CCObject *childObject;
-  CCARRAY_FOREACH(node->getChildren(), childObject) {
+  for(CCNode* childObject : CCArrayExt<CCNode*>(node->getChildren())) {
     if (CCMenu *childMenu = typeinfo_cast<CCMenu *>(childObject))
       anyUnlinked |= unlink(childMenu);
-    anyUnlinked |= unlinkChildren(static_cast<CCNode *>(childObject), depth-1);
+    anyUnlinked |= unlinkChildren(childObject, depth-1);
   }
   return anyUnlinked;
 }
@@ -109,7 +108,7 @@ bool LinkedCCMenu::unlinkChildren(CCNode *node, int depth) {
 LinkedCCMenu* LinkedCCMenu::create() {
   auto a = new LinkedCCMenu();
   if (a && a->init()) { a->autorelease(); return a; }
-  CC_SAFE_DELETE(a);
+  delete a;
   return nullptr;
 }
 

@@ -11,7 +11,7 @@
 using namespace geode::prelude;
 
 
-void AuthorFilterPopup::onTopMenuButton(CCObject *sender) {
+void AuthorFilterPopup::onActionMenuButton(CCObject *sender) {
   CCMenuItemSpriteExtra *button = static_cast<CCMenuItemSpriteExtra *>(sender);
   int tag = button->getTag();
   for (size_t i = 0; i < m_buttonMenu->getChildrenCount(); i += 2) {
@@ -96,10 +96,10 @@ void AuthorFilterPopup::customSetup() {
 
 AuthorFilterPopup* AuthorFilterPopup::create(FilterAndSortPopup *parent) {
     auto ret = new AuthorFilterPopup();
-    if (ret && ret->initAnchored(300.f, 255.f, parent)) {
+    if (ret && ret->init(300.f, 255.f, parent)) {
         ret->autorelease();
         return ret;
     }
-    CC_SAFE_DELETE(ret);
+    delete ret;
     return nullptr;
 }

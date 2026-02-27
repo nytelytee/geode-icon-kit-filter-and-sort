@@ -7,6 +7,7 @@ else()
     set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
 endif()
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(GEODE_SET_TARGET_AS_SYSTEM ON)
 
 project(IconKitFilterAndSort VERSION 1.0.1)
 
@@ -71,7 +72,7 @@ else()
   )
 endif()
 
-#set_property(TARGET ${PROJECT_NAME} PROPERTY COMPILE_WARNING_AS_ERROR ON)
+set_property(TARGET ${PROJECT_NAME} PROPERTY COMPILE_WARNING_AS_ERROR ON)
 
 # Set up dependencies, resources, link Geode
 setup_geode_mod(${PROJECT_NAME})

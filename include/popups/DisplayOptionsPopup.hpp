@@ -5,7 +5,7 @@ using namespace geode::prelude;
 class FilterAndSortPopup;
 
 
-class DisplayOptionsPopup : public Popup<FilterAndSortPopup*> {
+class DisplayOptionsPopup : public Popup {
 protected:
 
   CCMenu *m_buttonMenu;
@@ -15,7 +15,7 @@ protected:
 
   void addOption(const char*, int);
   void addOptionInfo(int, const char*);
-  bool setup(FilterAndSortPopup *) override;
+  bool init(FilterAndSortPopup *);
 
   void onClose(CCObject *) override;
 
