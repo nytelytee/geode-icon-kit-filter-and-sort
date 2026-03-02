@@ -1,3 +1,6 @@
+# v1.1.1
+- fix a bug with the arrows disappearing when they shouldn't
+
 # v1.1.0
 - update to 2.2081
 

@@ -20,21 +20,21 @@ void HookedGJGarageLayer::onModify(auto& self) {
   // and i don't want it to break with them, so i will hold off until a gd update to change the priorities to proper ones
 
   // these toggle the logic for when we should be messing with icon order, so make sure they toggle it on first, and toggle it off last
-  Result<> result = self.setHookPriority("GJGarageLayer::onArrow", INT_MIN);
+  Result<> result = self.setHookPriority("GJGarageLayer::onArrow", Priority::First);
   if (!result) log::error("Failed to set hook priority, Icon Kit Filter & Sort may act weird.");
-  result = self.setHookPriority("GJGarageLayer::onNavigate", INT_MIN);
+  result = self.setHookPriority("GJGarageLayer::onNavigate", Priority::First);
   if (!result) log::error("Failed to set hook priority, Icon Kit Filter & Sort may act weird.");
-  result = self.setHookPriority("GJGarageLayer::selectTab", INT_MIN);
+  result = self.setHookPriority("GJGarageLayer::selectTab", Priority::First);
   if (!result) log::error("Failed to set hook priority, Icon Kit Filter & Sort may act weird.");
-  result = self.setHookPriority("GJGarageLayer::init", INT_MIN);
+  result = self.setHookPriority("GJGarageLayer::init", Priority::First);
   if (!result) log::error("Failed to set hook priority, Icon Kit Filter & Sort may act weird.");
   
   // this reimplements original
-  result = self.setHookPriority("GJGarageLayer::getItems", INT_MAX-1);
+  result = self.setHookPriority("GJGarageLayer::getItems", Priority::Replace);
   if (!result) log::error("Failed to set hook priority, Icon Kit Filter & Sort may act weird.");
   
   // ensure we are in control which page gets passed to setupPage
-  result = self.setHookPriority("GJGarageLayer::setupPage", INT_MIN);
+  result = self.setHookPriority("GJGarageLayer::setupPage", Priority::First);
   if (!result) log::error("Failed to set hook priority, Icon Kit Filter & Sort may act weird.");
 
 }
@@ -106,17 +106,13 @@ void HookedGJGarageLayer::defaultToggleNavigationMenus(IconType iconType) {
   int totalIconCount = vanillaIconCount + moreIconsIconCount;
   int totalPageCount = vanillaPageCount + moreIconsPageCount;
 
-  bool hideNavDotMenu = iconKitState.settings.hideNavigationMenuOnSinglePage ? (totalPageCount > 1) && (totalIconCount != 0) : (totalIconCount != 0);
-  bool hideArrows = totalPageCount > 1;
+  bool showNavDotMenu = iconKitState.settings.hideNavigationMenuOnSinglePage ? (totalPageCount > 1) && (totalIconCount != 0) : (totalIconCount != 0);
+  bool showArrows = totalPageCount > 1;
 
-  toggleNavigationMenus(hideNavDotMenu, hideArrows);
+  toggleNavigationMenus(showNavDotMenu, showArrows);
 }
 
 void HookedGJGarageLayer::setupPage(int page, IconType iconType) {
-  if (iconKitState.stubOutSetupPageOnce) {
-    iconKitState.stubOutSetupPageOnce = false;
-    return;
-  }
   if (!SHOULD_CHANGE_ICON_TYPE(iconType)) {
     GJGarageLayer::setupPage(page, iconType);
     // show pages and arrows only if there are More Icons pages, hide otherwise, which is vanilla behavior;

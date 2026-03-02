@@ -51,7 +51,7 @@ struct IconKitState {
 
   // currently active settings (not defined when the game is launched)
   IconKitSettings settings;
-  // settings that will become the currently active settings when Apply is pressed (or loaded when GJGarageLayer::init is called)
+  // settings that will become the currently active settings when Apply is pressed
   IconKitSettings pendingSettings;
 
   std::unordered_map<UnlockType, std::vector<int>> acceptedIcons;
@@ -59,9 +59,6 @@ struct IconKitState {
   
   // if nonzero, GameManager::countForType is modified to give the icon count that would correspond to the correct page count
   int shouldChangeIcons = 0;
-  
-  // colon's lite ad chests mod workaround
-  bool stubOutSetupPageOnce = false;
 
 };
 
