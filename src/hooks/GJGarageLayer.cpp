@@ -16,9 +16,6 @@
 using namespace geode::prelude;
 
 void HookedGJGarageLayer::onModify(auto& self) {
-  // i should probably be using Priority::First and Priority::Replace here, but some mods still use raw numbers
-  // and i don't want it to break with them, so i will hold off until a gd update to change the priorities to proper ones
-
   // these toggle the logic for when we should be messing with icon order, so make sure they toggle it on first, and toggle it off last
   Result<> result = self.setHookPriority("GJGarageLayer::onArrow", Priority::First);
   if (!result) log::error("Failed to set hook priority, Icon Kit Filter & Sort may act weird.");
