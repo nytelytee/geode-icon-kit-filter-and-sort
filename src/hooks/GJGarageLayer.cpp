@@ -149,6 +149,9 @@ void HookedGJGarageLayer::toggleNavigationMenus(bool isNavDotMenuVisible, bool a
   m_leftArrow->setEnabled(areArrowsVisible);
   m_rightArrow->setVisible(areArrowsVisible);
   m_rightArrow->setEnabled(areArrowsVisible);
+  // temporary fix until Node IDs updates
+  m_leftArrow->getParent()->updateLayout();
+  m_rightArrow->getParent()->updateLayout();
 }
 
 void HookedGJGarageLayer::recalculateNavdotMenu(int currentPage, IconType iconType) {
