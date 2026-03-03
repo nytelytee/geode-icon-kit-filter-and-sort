@@ -1,3 +1,6 @@
+# v1.1.2
+- actually fix the bug that v1.1.1 "fixed". oops.
+
 # v1.1.1
 - fix a bug with the arrows disappearing when they shouldn't
 

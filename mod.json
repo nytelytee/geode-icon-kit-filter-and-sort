@@ -1,7 +1,7 @@
 {
   "geode": "5.3.0",
   "gd": {"android": "2.2081", "win": "2.2081", "mac": "2.2081", "ios": "2.2081"},
-  "version": "v1.1.1",
+  "version": "v1.1.2",
   "id": "nytelyte.icon_kit_filter_and_sort",
   "name": "Icon Kit Filter & Sort",
   "developer": "NyteLyte",
