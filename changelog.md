@@ -1,3 +1,6 @@
+# v1.1.3
+- fix settings applying erroneously, when you cancel the popup and reenter the icon kit
+
 # v1.1.2
 - actually fix the bug that v1.1.1 "fixed". oops.
 

@@ -19,12 +19,14 @@ protected:
   CCMenu *m_topMenu;
   CCMenu *m_actionMenu;
 
-  bool init();
+  bool init() override;
 
   void onToggle(CCObject *);
   void onMenuButton(CCObject *);
   void onActionButton(CCObject *);
   void refreshMenuState();
+
+  void onClose(CCObject*) override;
 
 public:
   static FilterAndSortPopup* create();

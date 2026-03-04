@@ -61,8 +61,6 @@ bool compareIcons(int icon1, int icon2, UnlockType unlockType) {
 
 void recalculateIconOrder() {
 
-  iconKitState.settings = iconKitState.pendingSettings;
-
   GameManager* gameManager = GameManager::get();
   for (UnlockType unlockType : UNLOCK_TYPES_TO_CHANGE) {
     int count = VANILLA_MAX_ICONS[unlockType];

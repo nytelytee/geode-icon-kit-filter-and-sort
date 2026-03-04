@@ -20,11 +20,17 @@ enum ActionButtonType { Cancel, Apply };
 enum MenuButtonType { AuthorFilterPopup, CategoryFilterPopup, SortPopup, IconKitDisplayOptionsPopup, ResetToDefault, SelectAll, DeselectAll, InvertFilter, ChangeFilterType };
 enum TogglerType { Locked, Unlocked };
 
+void FilterAndSortPopup::onClose(CCObject* sender) {
+  iconKitState.pendingSettings = iconKitState.settings;
+  Popup::onClose(sender);
+}
+
 void FilterAndSortPopup::onActionButton(CCObject *sender) {
   CCMenuItemSpriteExtra *button = static_cast<CCMenuItemSpriteExtra *>(sender);
   if (button->getTag() == ActionButtonType::Cancel) return Popup::onClose(sender);
   GJGarageLayer* garage = CCScene::get()->getChildByType<GJGarageLayer>(0);
   if (!garage) return;
+  iconKitState.settings = iconKitState.pendingSettings;
   recalculateIconOrderAndRemainOnSamePages(garage);
   garage->selectTab(garage->m_iconType);
   Mod::get()->setSavedValue<IconKitSettings>("iconKitSettings", iconKitState.settings);
