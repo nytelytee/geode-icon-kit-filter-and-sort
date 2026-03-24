@@ -57,3 +57,8 @@ int adjustedCountForType(IconType);
 
 // returns the currently active icon's page, accounting for Separate Dual Icons and More Icons
 int getActiveIconPage(IconType);
+
+// return the page count for an icon type
+// do not pass ShipFire nor Item, those are part of the Special page
+// for Special, returns 1 + moreIconsStreakPageCount + moreIconsShipFirePageCount
+int getPageCountForType(IconType);

@@ -1,15 +1,15 @@
 cmake_minimum_required(VERSION 3.21)
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "iOS" OR IOS)
-    set(CMAKE_OSX_ARCHITECTURES "arm64")
+  set(CMAKE_OSX_ARCHITECTURES "arm64")
 else()
-    set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
+  set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
 endif()
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(GEODE_SET_TARGET_AS_SYSTEM ON)
 
-project(IconKitFilterAndSort VERSION 1.0.1)
+project(IconKitFilterAndSort)
 
 add_library(${PROJECT_NAME} SHARED
   src/constants/other.cpp
@@ -52,27 +52,15 @@ endif()
 add_subdirectory($ENV{GEODE_SDK} ${CMAKE_CURRENT_BINARY_DIR}/geode)
 
 if (MSVC)
-  target_compile_options(
-    ${PROJECT_NAME} PUBLIC
-    "/Wall"
-    "/wd4820"  # padding inserted
-    "/wd4710"  # function not inlined
-    "/wd5045"  # disable spectre mitigation warning
-    # implicitly marked as deleted
-    "/wd4625"
-    "/wd5026"
-    "/wd4626"
-    "/wd5027"
-  )
+  message(FATAL_ERROR "MSVC is not supported. Either switch to clang or remove this line in CMakeLists.txt and pray.")
 else()
   target_compile_options(
     ${PROJECT_NAME} PUBLIC
     "-Wall" "-Wextra" "-Wpedantic"
     "-Wno-dollar-in-identifier-extension"
+    "-Werror"
   )
 endif()
-
-set_property(TARGET ${PROJECT_NAME} PROPERTY COMPILE_WARNING_AS_ERROR ON)
 
 # Set up dependencies, resources, link Geode
 setup_geode_mod(${PROJECT_NAME})

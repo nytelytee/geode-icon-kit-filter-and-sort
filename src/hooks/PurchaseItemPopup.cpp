@@ -19,14 +19,13 @@ void HookedPurchaseItemPopup::onPurchase(CCObject* sender) {
   if (!garage) return;
   UnlockType unlockType = static_cast<UnlockType>(m_storeItem->m_unlockType.value());
   if (!SHOULD_CHANGE_UNLOCK_TYPE(unlockType)) {
+    // you can't buy more icons icons, so give the bought icon attention if you happened to buy it somehow while you weren't on the actual vanilla page
     if (unlockType == UnlockType::Death) {
       if (garage->m_iconPages[IconType::DeathEffect] != 0) {
         garage->m_iconPages[IconType::DeathEffect] = 0;
         garage->selectTab(IconType::DeathEffect);
         giveIconAttention(garage, unlockType, m_storeItem->m_typeID.value());
       }
-    // you can't buy more icons icons, so give the bought icon attention if you happened to buy it while you weren't on
-    // the actual vanilla page; the death effect handling above is future proofing in case MI ever decides to support death effects
     } else {
       if (garage->m_iconPages[IconType::Special] != 0) {
         garage->m_iconPages[IconType::Special] = 0;

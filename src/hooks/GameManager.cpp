@@ -37,5 +37,5 @@ void HookedGameManager::reportAchievementWithID(char const* achievement, int p1,
     garage->selectTab(IconType::Cube);
     if (positionChanged) giveIconAttention(garage, UnlockType::Cube, 71);
   }
-  
+
 }

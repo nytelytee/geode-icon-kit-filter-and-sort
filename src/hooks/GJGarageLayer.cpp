@@ -11,7 +11,7 @@
 #include <popups/DisplayOptionsPopup.hpp>
 #include <popups/FilterAndSortPopup.hpp>
 
-//#include <hiimjustin000.more_icons/include/MoreIcons.hpp>
+#include <hiimjustin000.more_icons/include/MoreIcons.hpp>
 
 using namespace geode::prelude;
 
@@ -25,17 +25,17 @@ void HookedGJGarageLayer::onModify(auto& self) {
   if (!result) log::error("Failed to set hook priority, Icon Kit Filter & Sort may act weird.");
   result = self.setHookPriority("GJGarageLayer::init", Priority::First);
   if (!result) log::error("Failed to set hook priority, Icon Kit Filter & Sort may act weird.");
-  
+
   // this reimplements original
   result = self.setHookPriority("GJGarageLayer::getItems", Priority::Replace);
   if (!result) log::error("Failed to set hook priority, Icon Kit Filter & Sort may act weird.");
-  
+
   // ensure we are in control which page gets passed to setupPage
   result = self.setHookPriority("GJGarageLayer::setupPage", Priority::First);
   if (!result) log::error("Failed to set hook priority, Icon Kit Filter & Sort may act weird.");
 
 }
-    
+
 void HookedGJGarageLayer::onArrow(CCObject *sender) {
   iconKitState.shouldChangeIcons += 1;
   GJGarageLayer::onArrow(sender);
@@ -59,13 +59,13 @@ CCArray* HookedGJGarageLayer::getItems(int maxIconCount, int page, IconType icon
     return GJGarageLayer::getItems(maxIconCount, page, iconType, activeIcon);
 
   m_iconPages[iconType] = page;
-  
+
   GameManager* gameManager = GameManager::get();
   UnlockType unlockType = ICON_TO_UNLOCK[iconType];
   CCArray* finalArray = CCArray::create();
   CCSize playerSquareContentSize = CCSprite::createWithSpriteFrameName("playerSquare_001.png")->getContentSize();
   int finalIcon = std::min(maxIconCount, (page+1)*36);
-  
+
   m_currentIcon = nullptr;
   for (int currentIcon = page*36 + 1; currentIcon <= finalIcon; currentIcon++) {
     int currentIconDisplay = positionToDisplay(unlockType, currentIcon);
@@ -96,10 +96,10 @@ void HookedGJGarageLayer::defaultToggleNavigationMenus(IconType iconType) {
   int vanillaIconCount = GameManager::get()->countForType(iconType);
   int vanillaPageCount = (vanillaIconCount + 35)/36;
 
-  //int moreIconsIconCount = int(MoreIcons::getIcons(iconType).size());
-  int moreIconsIconCount = 0;
+  // no need to account for ship fire shenanigans here, this function only gets called on regular gamemode icon types
+  int moreIconsIconCount = int(more_icons::getIcons(iconType)->size());
   int moreIconsPageCount = (moreIconsIconCount + 35)/36;
-  
+
   int totalIconCount = vanillaIconCount + moreIconsIconCount;
   int totalPageCount = vanillaPageCount + moreIconsPageCount;
 
@@ -110,28 +110,40 @@ void HookedGJGarageLayer::defaultToggleNavigationMenus(IconType iconType) {
 }
 
 void HookedGJGarageLayer::setupPage(int page, IconType iconType) {
+
+  // clamp the page to the maximum page in case it inexplicably changes somehow (i have seen this happen with More Icons, and it will probably be fixed but eh)
+  iconKitState.shouldChangeIcons += 1;
+  // instead of overriding GameManager::activeIconForType to get setupPage to pick the correct page, never even pass -1 into setupPage to begin with
+  // if the active icon has been filtered out, page resolves to 0; this is the only sensible first option if there is no active icon anyway
+  page = page == -1 ? getActiveIconPage(iconType) : page;
+  int pageCount = getPageCountForType(iconType);
+  iconKitState.shouldChangeIcons -= 1;
+  if (page < 0) page = 0; // technically useless since the -1 case is handled       but what if it's < -1 somehow    lol
+  if (page >= pageCount) page = std::max(0, pageCount - 1);
+
   if (!SHOULD_CHANGE_ICON_TYPE(iconType)) {
     GJGarageLayer::setupPage(page, iconType);
     // show pages and arrows only if there are More Icons pages, hide otherwise, which is vanilla behavior;
     // we're not modifying the sorting order of these anyway, at least not now, in the future if we add More Icons filtering/sorting,
-    // the special page (and death effects, if MI implements them) may be filterable/sortable, even if it's just More Icons icons
-    // that we are filtering/sorting
-    //int moreIconsIcons = int(MoreIcons::getIcons(m_iconType).size());
-    int moreIconsIcons = 0;
+    // the special page and death effects may be filterable/sortable, even if it's just More Icons icons that we are filtering/sorting
+    int moreIconsIcons = int(more_icons::getIcons(m_iconType)->size());
+    if (m_iconType == IconType::Special) {
+      moreIconsIcons = 36 * ((moreIconsIcons + 35)/36);
+      moreIconsIcons += int(more_icons::getIcons(IconType::ShipFire)->size());
+    }
     int moreIconsPages = (moreIconsIcons + 35)/36;
+
+    recalculateNavdotMenu(page, iconType);
     toggleNavigationMenus(bool(moreIconsPages), bool(moreIconsPages));
     return;
   }
+
   iconKitState.shouldChangeIcons += 1;
-  
-  // instead of overriding GameManager::activeIconForType to get setupPage to pick the correct page, never even pass -1 into setupPage to begin with
-  // if the active icon has been filtered out, page resolves to 0; this is the only sensible first option if there is no active icon anyway
-  page = page == -1 ? getActiveIconPage(iconType) : page;
+
   GJGarageLayer::setupPage(page, iconType);
-  
   recalculateNavdotMenu(page, iconType);
   defaultToggleNavigationMenus(iconType);
-  
+
   iconKitState.shouldChangeIcons -= 1;
 }
 
@@ -149,15 +161,12 @@ void HookedGJGarageLayer::toggleNavigationMenus(bool isNavDotMenuVisible, bool a
   m_leftArrow->setEnabled(areArrowsVisible);
   m_rightArrow->setVisible(areArrowsVisible);
   m_rightArrow->setEnabled(areArrowsVisible);
-  // temporary fix until Node IDs updates
-  m_leftArrow->getParent()->updateLayout();
-  m_rightArrow->getParent()->updateLayout();
 }
 
 void HookedGJGarageLayer::recalculateNavdotMenu(int currentPage, IconType iconType) {
 
   UnlockType unlockType = ICON_TO_UNLOCK[iconType];
-  
+
   size_t acceptedCount = iconKitState.acceptedIcons[unlockType].size();
   size_t deniedCount = iconKitState.deniedIcons[unlockType].size();
   size_t lastAcceptedPage = acceptedCount ? (acceptedCount - 1)/36 : SIZE_MAX;
@@ -169,11 +178,14 @@ void HookedGJGarageLayer::recalculateNavdotMenu(int currentPage, IconType iconTy
       (deniedCount ? acceptedCount/36 : SIZE_MAX)
     )
   );
-  
+
   size_t vanillaPageCount = size_t((GameManager::get()->countForType(iconType)+35)/36);
 
-  //int moreIconsIcons = int(MoreIcons::getIcons(m_iconType).size());
-  int moreIconsIcons = 0;
+  int moreIconsIcons = int(more_icons::getIcons(iconType)->size());
+  if (iconType == IconType::Special) {
+    moreIconsIcons = 36 * ((moreIconsIcons + 35)/36);
+    moreIconsIcons += int(more_icons::getIcons(IconType::ShipFire)->size());
+  }
   int moreIconsPageCount = (moreIconsIcons + 35)/36;
 
   m_navDotMenu->removeAllChildren();
@@ -242,8 +254,8 @@ void HookedGJGarageLayer::recalculateNavdotMenu(int currentPage, IconType iconTy
     m_pageButtons->addObject(CCMenuItemSpriteExtra::create(CCSprite::create(), nullptr, nullptr));
   }
 }
-  
-  
+
+
 void HookedGJGarageLayer::onFilterAndSort(CCObject *) {
   FilterAndSortPopup::create()->show();
 }
@@ -267,14 +279,14 @@ void HookedGJGarageLayer::createFilterAndSortButton() {
   filterAndSortCollection->setContentSize({30, 30});
   filterAndSortCollection->setAnchorPoint({0.5, 0.5});
   filterAndSortCollection->updateLayout();
-  
+
   CircleButtonSprite* filterAndSortSprite = CircleButtonSprite::create(
       filterAndSortCollection, CircleBaseColor::Green, CircleBaseSize::Small
   );
 
   CCMenuItemSpriteExtra* filterAndSort = CCMenuItemSpriteExtra::create(filterAndSortSprite, this, menu_selector(HookedGJGarageLayer::onFilterAndSort));
   filterAndSort->setID("filter-and-sort-button"_spr);
-  
+
   shardsMenu->addChild(filterAndSort);
   shardsMenu->updateLayout();
 }
@@ -292,6 +304,6 @@ bool HookedGJGarageLayer::init() {
   iconKitState.shouldChangeIcons -= 1;
 
   if (!Mod::get()->getSettingValue<bool>("hide-filter-and-sort-button")) createFilterAndSortButton();
-  
+
   return true;
 }

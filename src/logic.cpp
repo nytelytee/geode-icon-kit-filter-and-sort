@@ -3,7 +3,7 @@
 #include <constants.hpp>
 #include <logic.hpp>
 #include <iconkit.hpp>
-//#include <hiimjustin000.more_icons/include/MoreIcons.hpp>
+#include <hiimjustin000.more_icons/include/MoreIcons.hpp>
 
 
 using namespace geode::prelude;
@@ -80,7 +80,7 @@ void recalculateIconOrder() {
 
       bool passesAuthorFilter = iconKitState.settings.authors[AUTHOR_FOR_ICON[unlockType][i]];
       if (!passesAuthorFilter) { denied->push_back(i); continue; }
-      
+
       accepted->push_back(i);
 
     }
@@ -95,7 +95,7 @@ std::tuple<std::optional<int>, std::optional<int>, std::optional<int>> getPageIn
 
   int acceptedCount = int(iconKitState.acceptedIcons[unlockType].size());
   int deniedCount = int(iconKitState.deniedIcons[unlockType].size());
-  
+
   std::optional<int> lastAcceptedPage = (acceptedCount != 0) ? std::optional{(acceptedCount - 1)/36} : std::nullopt;
   std::optional<int> firstDeniedPage = (
     !iconKitState.settings.showDenied ?
@@ -113,9 +113,9 @@ std::tuple<std::optional<int>, std::optional<int>, std::optional<int>> getPageIn
       std::optional{(acceptedCount + deniedCount - 1)/36}
     )
   ) : std::nullopt;
-  
+
   return {lastAcceptedPage, firstDeniedPage, maxVanillaPage};
-  
+
 }
 
 void remainOnSameSectionPageForIconType(
@@ -129,8 +129,7 @@ void remainOnSameSectionPageForIconType(
   if (garage->m_iconPages[iconType] == -1) return;
   auto [newLastAcceptedPage, newFirstDeniedPage, newMaxVanillaPage] = getPageInfoForType(ICON_TO_UNLOCK[iconType]);
   int currentPage = garage->m_iconPages[iconType];
-  //int moreIconsIcons = int(MoreIcons::getIcons(iconType).size());
-  int moreIconsIcons = 0;
+  int moreIconsIcons = int(more_icons::getIcons(iconType)->size());
 
   // 0 = blank, 1 = accepted, 2 = denied, 3 = more icons
   // the mixed page (magenta) counts as an accepted section type when getting the section type (so, if we are on it specifically it counts as section type 1)
@@ -139,7 +138,7 @@ void remainOnSameSectionPageForIconType(
   if (oldLastAcceptedPage && currentPage <= *oldLastAcceptedPage) sectionType = 1;
   else if (oldFirstDeniedPage && oldMaxVanillaPage && *oldFirstDeniedPage <= currentPage && currentPage <= *oldMaxVanillaPage) sectionType = 2;
   else if ((!oldMaxVanillaPage && moreIconsIcons != 0) || (oldMaxVanillaPage && currentPage > *oldMaxVanillaPage)) sectionType = 3;
-  
+
   // there used to be no vanilla icons, and no more icons icons either, we stay on page 0 regardless
   if (sectionType == 0) {
     garage->m_iconPages[iconType] = 0;
@@ -149,7 +148,7 @@ void remainOnSameSectionPageForIconType(
     // there are no more accepted page we prefer going to the *previous* section if our section has been exhausted,
     // and there are no previous sections, so we go to the first page we can go to, which is 0
     if (!newLastAcceptedPage) garage->m_iconPages[iconType] = 0;
-    
+
     // if some accepted pages do exist, go to the same page we were already at, but clamp it to the maximum last accepted page
     // if we do not need to clamp anything, then the page remains the same
     else if (currentPage > *newLastAcceptedPage) garage->m_iconPages[iconType] = *newLastAcceptedPage;
@@ -200,15 +199,14 @@ void recalculateIconOrderAndRemainOnSamePages(GJGarageLayer* garage) {
         (acceptedCount + deniedCount + 35)/36
       )
     );
-    //int moreIconsPageCount = (int(MoreIcons::getIcons(UNLOCK_TO_ICON[unlockType]).size()) + 35)/36;
-    int moreIconsPageCount = 0;
+    int moreIconsPageCount = (int(more_icons::getIcons(UNLOCK_TO_ICON[unlockType])->size()) + 35)/36;
     if (garage->m_iconPages[UNLOCK_TO_ICON[unlockType]] > vanillaPageCount + moreIconsPageCount - 1)
       garage->m_iconPages[UNLOCK_TO_ICON[unlockType]] = vanillaPageCount + moreIconsPageCount - 1;
   }
 }
 
 void recalculateIconOrderAndRemainOnSameSectionPages(GJGarageLayer* garage) {
-  
+
   std::map<IconType, std::optional<int>> oldLastAcceptedPages;
   std::map<IconType, std::optional<int>> oldFirstDeniedPages;
   std::map<IconType, std::optional<int>> oldMaxVanillaPages;
@@ -221,7 +219,7 @@ void recalculateIconOrderAndRemainOnSameSectionPages(GJGarageLayer* garage) {
   }
 
   recalculateIconOrder();
-  
+
   for (IconType iconType : ICON_TYPES_TO_CHANGE)
     remainOnSameSectionPageForIconType(garage, iconType, oldLastAcceptedPages[iconType], oldFirstDeniedPages[iconType], oldMaxVanillaPages[iconType]);
 }
@@ -250,7 +248,7 @@ void giveIconAttention(GJGarageLayer* garage, UnlockType unlockType, int itemID)
   CCMenuItemSpriteExtra* menuItem = static_cast<CCMenuItemSpriteExtra*>(menu->getChildByTag(itemID));
   if (!menuItem) return;
   if (menuItem->m_iconType != UNLOCK_TO_ICON[unlockType]) return;
-  
+
   CCSprite* redCursor = CCSprite::createWithSpriteFrameName("GJ_select_001.png");
   redCursor->setColor({255, 0, 0});
   redCursor->setScale(0.85f);
@@ -269,7 +267,7 @@ void giveIconAttention(GJGarageLayer* garage, UnlockType unlockType, int itemID)
 bool recalculateIconOrderAndTrackIcon(GJGarageLayer* garage, UnlockType unlockType, int itemDisplay) {
   if (!garage) return false;
   if (!SHOULD_CHANGE_UNLOCK_TYPE(unlockType)) return false;
-  
+
   IconType iconType = UNLOCK_TO_ICON[unlockType];
 
   int oldItemPosition = displayToPosition(unlockType, itemDisplay);
@@ -316,7 +314,7 @@ int positionToDisplay(UnlockType unlockType, int item) {
   if (size_t(newIndex) >= iconKitState.deniedIcons[unlockType].size()) return 0;
 
   return iconKitState.deniedIcons[unlockType][size_t(newIndex)];
-  
+
 }
 
 int displayToPosition(UnlockType unlockType, int item) {
@@ -325,7 +323,7 @@ int displayToPosition(UnlockType unlockType, int item) {
 
   std::vector<int>::iterator p = std::find(iconKitState.acceptedIcons[unlockType].begin(), iconKitState.acceptedIcons[unlockType].end(), item);
   if (p != iconKitState.acceptedIcons[unlockType].end()) return p - iconKitState.acceptedIcons[unlockType].begin() + 1;
-  
+
   int delta = 0;
   if (iconKitState.settings.separateAcceptedFromDenied)
     delta = int(36*((iconKitState.acceptedIcons[unlockType].size()+35)/36) - iconKitState.acceptedIcons[unlockType].size());
@@ -347,37 +345,55 @@ int adjustedCountForType(IconType iconType) {
 }
 
 int getActiveIconPage(IconType iconType) {
-  
+
   Mod* separateDualIcons = Loader::get()->getLoadedMod("weebify.separate_dual_icons");
   bool secondPlayerSelected = separateDualIcons && separateDualIcons->getSavedValue("2pselected", false);
 
-  /*if (IconInfo* icon = MoreIcons::getIcon(iconType, secondPlayerSelected)) {
-    int moreIconsActiveIconPosition = 36*((GameManager::get()->countForType(iconType) + 35)/36) + int(icon - MoreIcons::getIcons(iconType)[0]) + 1;
-    return (moreIconsActiveIconPosition - 1)/36;
-  } else*/ if (secondPlayerSelected) {
-    int separateDualIconsActiveIconPosition;
+  if (IconInfo* icon = more_icons::activeIcon(iconType, secondPlayerSelected)) {
+    int vanillaPagePad = 36*((GameManager::get()->countForType(iconType) + 35)/36);
+    int moreIconsSpecialPagePad = 0;
+    // ship fires come after special pages since MI v2.0.7, so we additionally pad by the special page count for that
+    if (iconType == IconType::ShipFire)
+      moreIconsSpecialPagePad = 36*((more_icons::getIcons(IconType::Special)->size() + 35)/36);
+    int moreIconsIconPosition = int(icon - more_icons::getIcons(iconType)->data()) + 1;
+    return (vanillaPagePad + moreIconsSpecialPagePad + moreIconsIconPosition - 1)/36;
+  } else if (secondPlayerSelected) {
+    int separateDualIconsActiveIconDisplay;
     switch(iconType) {
-      case    IconType::Cube: separateDualIconsActiveIconPosition = separateDualIcons->getSavedValue<int>("cube", 1); break;
-      case    IconType::Ship: separateDualIconsActiveIconPosition = separateDualIcons->getSavedValue<int>("ship", 1); break;
-      case    IconType::Ball: separateDualIconsActiveIconPosition = separateDualIcons->getSavedValue<int>("roll", 1); break;
-      case     IconType::Ufo: separateDualIconsActiveIconPosition = separateDualIcons->getSavedValue<int>("bird", 1); break;
-      case    IconType::Wave: separateDualIconsActiveIconPosition = separateDualIcons->getSavedValue<int>("dart", 1); break;
-      case   IconType::Robot: separateDualIconsActiveIconPosition = separateDualIcons->getSavedValue<int>("robot", 1); break;
-      case  IconType::Spider: separateDualIconsActiveIconPosition = separateDualIcons->getSavedValue<int>("spider", 1); break;
-      case   IconType::Swing: separateDualIconsActiveIconPosition = separateDualIcons->getSavedValue<int>("swing", 1); break;
-      case IconType::Jetpack: separateDualIconsActiveIconPosition = separateDualIcons->getSavedValue<int>("jetpack", 1); break;
-
+      case    IconType::Cube: separateDualIconsActiveIconDisplay = separateDualIcons->getSavedValue<int>("cube", 1); break;
+      case    IconType::Ship: separateDualIconsActiveIconDisplay = separateDualIcons->getSavedValue<int>("ship", 1); break;
+      case    IconType::Ball: separateDualIconsActiveIconDisplay = separateDualIcons->getSavedValue<int>("roll", 1); break;
+      case     IconType::Ufo: separateDualIconsActiveIconDisplay = separateDualIcons->getSavedValue<int>("bird", 1); break;
+      case    IconType::Wave: separateDualIconsActiveIconDisplay = separateDualIcons->getSavedValue<int>("dart", 1); break;
+      case   IconType::Robot: separateDualIconsActiveIconDisplay = separateDualIcons->getSavedValue<int>("robot", 1); break;
+      case  IconType::Spider: separateDualIconsActiveIconDisplay = separateDualIcons->getSavedValue<int>("spider", 1); break;
+      case   IconType::Swing: separateDualIconsActiveIconDisplay = separateDualIcons->getSavedValue<int>("swing", 1); break;
+      case IconType::Jetpack: separateDualIconsActiveIconDisplay = separateDualIcons->getSavedValue<int>("jetpack", 1); break;
+      // we know that the more icons mod either isn't installed or the active icon is not an MI icon, it has to be the first page here
       case IconType::DeathEffect:
       case IconType::Special:
       case IconType::ShipFire:
       case IconType::Item:
       default: return 0;
     }
-    return (int(displayToPosition(ICON_TO_UNLOCK[iconType], separateDualIconsActiveIconPosition)) - 1)/36;
+    return (int(displayToPosition(ICON_TO_UNLOCK[iconType], separateDualIconsActiveIconDisplay)) - 1)/36;
   }
   else {
-    int activeIconPosition = GameManager::get()->activeIconForType(iconType);
-    return (int(displayToPosition(ICON_TO_UNLOCK[iconType], activeIconPosition)) - 1)/36;
+    int activeIconDisplay = GameManager::get()->activeIconForType(iconType);
+    return (int(displayToPosition(ICON_TO_UNLOCK[iconType], activeIconDisplay)) - 1)/36;
   }
 }
 
+int getPageCountForType(IconType iconType) {
+  int vanillaPageCount = 1;
+  if (iconType != IconType::DeathEffect && iconType != IconType::Special)
+    vanillaPageCount = ((GameManager::get()->countForType(iconType) + 35)/36);
+
+  int moreIconsPageCount = ((more_icons::getIcons(iconType)->size() + 35)/36);
+  // see comment in getActiveIconPage
+  if (iconType == IconType::Special)
+    moreIconsPageCount += ((more_icons::getIcons(IconType::ShipFire)->size() + 35)/36);
+
+  return vanillaPageCount + moreIconsPageCount;
+
+}

@@ -1,3 +1,6 @@
+# v1.2.0
+- readd More Icons support
+
 # v1.1.3
 - fix settings applying erroneously, when you cancel the popup and reenter the icon kit
 
