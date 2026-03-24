@@ -129,7 +129,9 @@ void remainOnSameSectionPageForIconType(
 	if (garage->m_iconPages[iconType] == -1) return;
 	auto [newLastAcceptedPage, newFirstDeniedPage, newMaxVanillaPage] = getPageInfoForType(ICON_TO_UNLOCK[iconType]);
 	int currentPage = garage->m_iconPages[iconType];
-	int moreIconsIcons = int(more_icons::getIcons(iconType)->size());
+	int moreIconsIcons = 0;
+	if (std::vector<IconInfo>* result = more_icons::getIcons(iconType))
+		moreIconsIcons = int(result->size());
 
 	// 0 = blank, 1 = accepted, 2 = denied, 3 = more icons
 	// the mixed page (magenta) counts as an accepted section type when getting the section type (so, if we are on it specifically it counts as section type 1)
@@ -199,7 +201,9 @@ void recalculateIconOrderAndRemainOnSamePages(GJGarageLayer* garage) {
 				(acceptedCount + deniedCount + 35)/36
 			)
 		);
-		int moreIconsPageCount = (int(more_icons::getIcons(UNLOCK_TO_ICON[unlockType])->size()) + 35)/36;
+		int moreIconsPageCount = 0;
+		if (std::vector<IconInfo>* result = more_icons::getIcons(UNLOCK_TO_ICON[unlockType]))
+			moreIconsPageCount = (int(result->size()) + 35)/36;
 		if (garage->m_iconPages[UNLOCK_TO_ICON[unlockType]] > vanillaPageCount + moreIconsPageCount - 1)
 			garage->m_iconPages[UNLOCK_TO_ICON[unlockType]] = vanillaPageCount + moreIconsPageCount - 1;
 	}
@@ -284,8 +288,8 @@ bool recalculateIconOrderAndTrackIcon(GJGarageLayer* garage, UnlockType unlockTy
 	}
 	// the act of unlocking the icon has maybe changed its page, jump to the page the icon is at now immediately
 	// this is either (also a note to myself to check if i did this correctly):
-	//	 due to the old item being filtered out, and the new item being shown (newItemPosition != 0 && oldItemPosition == 0) or
-	//	 due to the old item being shown, and the new item also being shown, but in a different position (newItemPosition != 0 && oldItemPosition != 0 && newItemPosition != oldItemPosition)
+	//   due to the old item being filtered out, and the new item being shown (newItemPosition != 0 && oldItemPosition == 0) or
+	//   due to the old item being shown, and the new item also being shown, but in a different position (newItemPosition != 0 && oldItemPosition != 0 && newItemPosition != oldItemPosition)
 	else if (newItemPosition != oldItemPosition) {
 		garage->m_iconPages[iconType] = (newItemPosition - 1)/36;
 		return true;
@@ -350,6 +354,7 @@ int getActiveIconPage(IconType iconType) {
 	bool secondPlayerSelected = separateDualIcons && separateDualIcons->getSavedValue("2pselected", false);
 
 	if (IconInfo* icon = more_icons::activeIcon(iconType, secondPlayerSelected)) {
+		// if we got here, MI should be installed, so we don't expect nullptrs from getIcons
 		int vanillaPagePad = 36*((GameManager::get()->countForType(iconType) + 35)/36);
 		int moreIconsSpecialPagePad = 0;
 		// ship fires come after special pages since MI v2.0.7, so we additionally pad by the special page count for that
@@ -389,10 +394,13 @@ int getPageCountForType(IconType iconType) {
 	if (iconType != IconType::DeathEffect && iconType != IconType::Special)
 		vanillaPageCount = ((GameManager::get()->countForType(iconType) + 35)/36);
 
-	int moreIconsPageCount = ((more_icons::getIcons(iconType)->size() + 35)/36);
+	int moreIconsPageCount = 0;
+	if (std::vector<IconInfo>* result = more_icons::getIcons(iconType))
+		moreIconsPageCount = ((result->size() + 35)/36);
 	// see comment in getActiveIconPage
 	if (iconType == IconType::Special)
-		moreIconsPageCount += ((more_icons::getIcons(IconType::ShipFire)->size() + 35)/36);
+		if (std::vector<IconInfo>* result = more_icons::getIcons(IconType::ShipFire))
+			moreIconsPageCount += ((result->size() + 35)/36);
 
 	return vanillaPageCount + moreIconsPageCount;
 

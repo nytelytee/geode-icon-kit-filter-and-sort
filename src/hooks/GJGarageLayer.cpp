@@ -97,7 +97,9 @@ void HookedGJGarageLayer::defaultToggleNavigationMenus(IconType iconType) {
 	int vanillaPageCount = (vanillaIconCount + 35)/36;
 
 	// no need to account for ship fire shenanigans here, this function only gets called on regular gamemode icon types
-	int moreIconsIconCount = int(more_icons::getIcons(iconType)->size());
+	int moreIconsIconCount = 0;
+	if (std::vector<IconInfo>* result = more_icons::getIcons(iconType))
+		moreIconsIconCount = int(result->size());
 	int moreIconsPageCount = (moreIconsIconCount + 35)/36;
 
 	int totalIconCount = vanillaIconCount + moreIconsIconCount;
@@ -126,10 +128,13 @@ void HookedGJGarageLayer::setupPage(int page, IconType iconType) {
 		// show pages and arrows only if there are More Icons pages, hide otherwise, which is vanilla behavior;
 		// we're not modifying the sorting order of these anyway, at least not now, in the future if we add More Icons filtering/sorting,
 		// the special page and death effects may be filterable/sortable, even if it's just More Icons icons that we are filtering/sorting
-		int moreIconsIcons = int(more_icons::getIcons(m_iconType)->size());
+		int moreIconsIcons = 0;
+		if (std::vector<IconInfo>* result = more_icons::getIcons(m_iconType))
+			moreIconsIcons = int(result->size());
 		if (m_iconType == IconType::Special) {
 			moreIconsIcons = 36 * ((moreIconsIcons + 35)/36);
-			moreIconsIcons += int(more_icons::getIcons(IconType::ShipFire)->size());
+			if (std::vector<IconInfo>* result = more_icons::getIcons(IconType::ShipFire))
+				moreIconsIcons += int(result->size());
 		}
 		int moreIconsPages = (moreIconsIcons + 35)/36;
 
@@ -181,10 +186,13 @@ void HookedGJGarageLayer::recalculateNavdotMenu(int currentPage, IconType iconTy
 
 	size_t vanillaPageCount = size_t((GameManager::get()->countForType(iconType)+35)/36);
 
-	int moreIconsIcons = int(more_icons::getIcons(iconType)->size());
+	int moreIconsIcons = 0;
+	if (std::vector<IconInfo>* result = more_icons::getIcons(iconType))
+		moreIconsIcons = int(result->size());
 	if (iconType == IconType::Special) {
 		moreIconsIcons = 36 * ((moreIconsIcons + 35)/36);
-		moreIconsIcons += int(more_icons::getIcons(IconType::ShipFire)->size());
+		if (std::vector<IconInfo>* result = more_icons::getIcons(IconType::ShipFire))
+			moreIconsIcons += int(result->size());
 	}
 	int moreIconsPageCount = (moreIconsIcons + 35)/36;
 
