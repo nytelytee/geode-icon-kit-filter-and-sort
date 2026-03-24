@@ -1,4 +1,4 @@
-﻿std::unordered_map<UnlockType, std::unordered_map<std::string, std::vector<int>>> CATEGORIES = {
+std::unordered_map<UnlockType, std::unordered_map<std::string, std::vector<int>>> CATEGORIES = {
   { UnlockType::Cube, {
     { "Default Icons", { 1, 2, 3, 4 } },
     { "RobTop Levels", { 5, 6, 7, 8, 9, 10, 11, 14, 16, 18, 27, 35, 42, 44, 45, 74, 240, 222, 65, 67, 69, 72, 75, 143, 144, 145, 47, 48, 15, 17, 60, 59, 233, 205, 66, 68, 70, 146, 147, 148 } },

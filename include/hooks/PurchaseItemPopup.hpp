@@ -6,12 +6,10 @@
 #include <iconkit.hpp>
 #include <logic.hpp>
 
-using namespace geode::prelude;
+struct HookedPurchaseItemPopup : geode::Modify<HookedPurchaseItemPopup, PurchaseItemPopup> {
 
-struct HookedPurchaseItemPopup : Modify<HookedPurchaseItemPopup, PurchaseItemPopup> {
-  
-  static void onModify(auto&);
-  
-  $override void onPurchase(CCObject* sender);
+	static void onModify(auto&);
+
+	$override void onPurchase(cocos2d::CCObject* sender);
 
 };

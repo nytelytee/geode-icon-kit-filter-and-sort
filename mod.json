@@ -1,24 +1,24 @@
 {
-  "geode": "5.4.1",
-  "gd": {"android": "2.2081", "win": "2.2081", "mac": "2.2081", "ios": "2.2081"},
-  "version": "v1.2.0",
-  "id": "nytelyte.icon_kit_filter_and_sort",
-  "name": "Icon Kit Filter & Sort",
-  "developer": "NyteLyte",
-  "description": "Allows you to filter and sort icons in the icon kit.",
-  "dependencies": {
-    "geode.devtools": {"version": ">=1.13.1", "required": false},
-    "geode.node-ids": {"version": ">=1.23.2", "required": true},
-    "hiimjustin000.more_icons": {"version": ">=2.0.7", "required": false}
-  },
-  "api": {"include": ["include/api/*.hpp"]},
-  "links": {"source": "https://github.com/nytelytee/geode-icon-kit-filter-and-sort.git"},
-  "resources": {
-    "spritesheets": {
-      "IconKitFilterAndSortNavdotButtonSheet": ["resources/IKFS_navDotButton_mixed.png", "resources/IKFS_navDotButton_denied.png"]
-    },
-    "sprites": ["resources/IKFS_button_01.png"],
-    "files": ["resources/examples/*.png"]
-  },
-  "settings": {"hide-filter-and-sort-button": {"name": "Hide Filter and Sort Button", "type": "bool", "default": false}}
+	"geode": "5.4.1",
+	"gd": {"android": "2.2081", "win": "2.2081", "mac": "2.2081", "ios": "2.2081"},
+	"version": "v1.2.0",
+	"id": "nytelyte.icon_kit_filter_and_sort",
+	"name": "Icon Kit Filter & Sort",
+	"developer": "NyteLyte",
+	"description": "Allows you to filter and sort icons in the icon kit.",
+	"dependencies": {
+		"geode.devtools": {"version": ">=1.13.1", "required": false},
+		"geode.node-ids": {"version": ">=1.23.2", "required": true},
+		"hiimjustin000.more_icons": {"version": ">=2.0.7", "required": false}
+	},
+	"api": {"include": ["include/api/*.hpp"]},
+	"links": {"source": "https://github.com/nytelytee/geode-icon-kit-filter-and-sort.git"},
+	"resources": {
+		"spritesheets": {
+			"IconKitFilterAndSortNavdotButtonSheet": ["resources/IKFS_navDotButton_mixed.png", "resources/IKFS_navDotButton_denied.png"]
+		},
+		"sprites": ["resources/IKFS_button_01.png"],
+		"files": ["resources/examples/*.png"]
+	},
+	"settings": {"hide-filter-and-sort-button": {"name": "Hide Filter and Sort Button", "type": "bool", "default": false}}
 }

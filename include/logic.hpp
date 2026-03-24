@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Geode/Geode.hpp>
-using namespace geode::prelude;
 
 // partial comparison functions for sorting
 std::optional<bool> compareByNumber(int, int, UnlockType);
@@ -19,7 +18,7 @@ void recalculateIconOrder();
 // utilities for recalculateIconOrderAndRemainOnSameSectionPages
 std::tuple<std::optional<int>, std::optional<int>, std::optional<int>> getPageInfoForType(UnlockType);
 void remainOnSameSectionPageForIconType(
-  GJGarageLayer*, IconType, std::optional<int>, std::optional<int>, std::optional<int>
+	GJGarageLayer*, IconType, std::optional<int>, std::optional<int>, std::optional<int>
 );
 
 // remain on the same page number after recalculating icon order, to be used when applying a new configuration

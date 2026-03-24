@@ -6,29 +6,27 @@ class FilterPopup;
 class SortPopup;
 class DisplayOptionsPopup;
 
-using namespace geode::prelude;
-
-class FilterAndSortPopup : public Popup {
+class FilterAndSortPopup : public geode::Popup {
 protected:
 
-  friend FilterPopup;
-  friend SortPopup;
-  friend DisplayOptionsPopup;
+	friend FilterPopup;
+	friend SortPopup;
+	friend DisplayOptionsPopup;
 
-  CCMenu *m_buttonMenu;
-  CCMenu *m_topMenu;
-  CCMenu *m_actionMenu;
+	cocos2d::CCMenu *m_buttonMenu;
+	cocos2d::CCMenu *m_topMenu;
+	cocos2d::CCMenu *m_actionMenu;
 
-  bool init() override;
+	bool init() override;
 
-  void onToggle(CCObject *);
-  void onMenuButton(CCObject *);
-  void onActionButton(CCObject *);
-  void refreshMenuState();
+	void onToggle(cocos2d::CCObject *);
+	void onMenuButton(cocos2d::CCObject *);
+	void onActionButton(cocos2d::CCObject *);
+	void refreshMenuState();
 
-  void onClose(CCObject*) override;
+	void onClose(cocos2d::CCObject*) override;
 
 public:
-  static FilterAndSortPopup* create();
+	static FilterAndSortPopup* create();
 
 };

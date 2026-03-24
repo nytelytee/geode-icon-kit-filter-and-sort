@@ -5,25 +5,23 @@
 
 class FilterAndSortPopup;
 
-using namespace geode::prelude;
-
-class FilterPopup : public Popup {
+class FilterPopup : public geode::Popup {
 protected:
 
-  CCMenu *m_actionButtonMenu;
-  BoundCCMenu *m_buttonMenu;
-  ScrollLayer *m_scrollLayer;
-  CCSize m_scrollLayerSize;
-  CCSize m_buttonMenuSize;
-  FilterAndSortPopup *parentPopup;
+	cocos2d::CCMenu *m_actionButtonMenu;
+	BoundCCMenu *m_buttonMenu;
+	geode::ScrollLayer *m_scrollLayer;
+	cocos2d::CCSize m_scrollLayerSize;
+	cocos2d::CCSize m_buttonMenuSize;
+	FilterAndSortPopup *parentPopup;
 
-  virtual void onActionMenuButton(CCObject *) = 0;
-  void onClose(CCObject *) override;
+	virtual void onActionMenuButton(cocos2d::CCObject *) = 0;
+	void onClose(cocos2d::CCObject *) override;
 
-  bool init(float, float, FilterAndSortPopup *);
+	bool init(float, float, FilterAndSortPopup *);
 
-  void preCustomSetup();
-  virtual void customSetup() = 0;
-  void postCustomSetup();
+	void preCustomSetup();
+	virtual void customSetup() = 0;
+	void postCustomSetup();
 
 };

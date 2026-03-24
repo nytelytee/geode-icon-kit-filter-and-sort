@@ -4,28 +4,26 @@
 
 class FilterAndSortPopup;
 
-using namespace geode::prelude;
-
-class SortPopup : public Popup {
+class SortPopup : public geode::Popup {
 protected:
 
-  CCNode *m_sortingList;
-  FilterAndSortPopup *parentPopup;
+	cocos2d::CCNode *m_sortingList;
+	FilterAndSortPopup *parentPopup;
 
-  static const GLubyte EVEN_BACKGROUND_OPACITY = 32;
-  static const GLubyte ODD_BACKGROUND_OPACITY = 16;
+	static const GLubyte EVEN_BACKGROUND_OPACITY = 32;
+	static const GLubyte ODD_BACKGROUND_OPACITY = 16;
 
-  bool init(FilterAndSortPopup *);
+	bool init(FilterAndSortPopup *);
 
-  void onArrow(CCObject *);
-  void onReverseSortOrder(CCObject *);
-  void onToggle(CCObject *);
-  
-  void onClose(CCObject *) override;
-  
-  void recalculateListItemBackgrounds();
+	void onArrow(cocos2d::CCObject *);
+	void onReverseSortOrder(cocos2d::CCObject *);
+	void onToggle(cocos2d::CCObject *);
+
+	void onClose(cocos2d::CCObject *) override;
+
+	void recalculateListItemBackgrounds();
 
 public:
-  static SortPopup* create(FilterAndSortPopup *);
+	static SortPopup* create(FilterAndSortPopup *);
 
 };
