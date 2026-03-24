@@ -51,6 +51,8 @@ endif()
 
 add_subdirectory($ENV{GEODE_SDK} ${CMAKE_CURRENT_BINARY_DIR}/geode)
 
+target_compile_definitions(${PROJECT_NAME} PUBLIC MORE_ICONS_EVENTS)
+
 if (MSVC)
 	message(FATAL_ERROR "MSVC is not supported. Either switch to clang or remove this line in CMakeLists.txt and pray.")
 else()
