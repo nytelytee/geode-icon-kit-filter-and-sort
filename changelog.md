@@ -1,3 +1,6 @@
+# v1.2.1
+- move cube 370 into Wraith Chest category
+
 # v1.2.0
 - readd More Icons support
 

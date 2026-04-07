@@ -191,10 +191,10 @@ bool SortPopup::init(FilterAndSortPopup *parent) {
 		listItemSortLabels[i]->limitLabelWidth(sortLabelWidth * 0.9f, 1, 0);
 
 		listItemBackgrounds[i] = CCLayerColor::create({0, 0, 0, (GLubyte) (ODD_BACKGROUND_OPACITY * (i & 1) + EVEN_BACKGROUND_OPACITY * !(i & 1))}, listItemSize.width, listItemSize.height);
-		listItemBackgrounds[i]->setPosition(bottomLeft - CCPoint{0, listItemSize.height}*i);
+		listItemBackgrounds[i]->setPosition(bottomLeft - CCPoint{0, listItemSize.height*float(i)});
 
 		listItemForegrounds[i] = CCLayerColor::create({0, 0, 0, 0}, listItemSize.width, listItemSize.height);
-		listItemForegrounds[i]->setPosition(bottomLeft - CCPoint{0, listItemSize.height}*i);
+		listItemForegrounds[i]->setPosition(bottomLeft - CCPoint{0, listItemSize.height*float(i)});
 	}
 
 	for (int i = 0; i < SORT_TYPE_COUNT; i++) {

@@ -85,7 +85,7 @@ CCArray* HookedGJGarageLayer::getItems(int maxIconCount, int page, IconType icon
 
 		finalArray->addObject(menuItem);
 		if (currentIconDisplay == activeIcon) m_currentIcon = menuItem;
-		if (!isUnlocked) browserItem->changeToLockedState(1.0 / iconScale);
+		if (!isUnlocked) browserItem->changeToLockedState(1.0f / iconScale);
 	}
 
 	return finalArray;
@@ -204,7 +204,7 @@ void HookedGJGarageLayer::recalculateNavdotMenu(int currentPage, IconType iconTy
 	geode::AxisLayout* navDotMenuLayout = RowLayout::create()->setGap(0.f)->setAxisAlignment(AxisAlignment::Center)->setGrowCrossAxis(true);
 	m_navDotMenu->setLayout(navDotMenuLayout);
 
-	for (size_t i = 0; i < vanillaPageCount + moreIconsPageCount; i++) {
+	for (size_t i = 0; i < vanillaPageCount + size_t(moreIconsPageCount); i++) {
 		std::string_view spriteString;
 		if (int(i) == currentPage) {
 			// in the future, if we support sorting and filtering More Icons icons as well, do the same thing as below, but for custom icons

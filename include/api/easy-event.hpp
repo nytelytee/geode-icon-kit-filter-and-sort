@@ -42,11 +42,29 @@ namespace nytelyte::easy_event {
 		template <typename Function, typename... EventParameters>
 		concept FunctionHasValidArguments = std::invocable<Function, EventParameters...>;
 
+		// this used to work, but then i updated clang and it stopped compiling
+		// i *think* that this working may have been a compiler bug then?
+		// basically, the short circuit when ReturnType was void would prevent the
+		// instantiation of ReturnType& as void&, but now it doesn't?
+		// note that this is a guess, i haven't actually tried to find whether this is a bug in clang or not
+		// i just know that it worked fine, and then it stopped working fine after i updated clang
+		/*
 		template <typename Function, typename ReturnType, typename... EventParameters>
 		concept FunctionHasValidReturnType = (
 			(std::is_void_v<ReturnType> && std::is_void_v<std::invoke_result_t<Function, EventParameters...>>) ||
 			std::assignable_from<ReturnType&, std::invoke_result_t<Function, EventParameters...>>
 		);
+		*/
+
+		template <typename ReturnType, typename ActualReturn>
+		struct IsCompatibleReturn : std::bool_constant<std::assignable_from<ReturnType&, ActualReturn>> {};
+
+		template <typename ActualReturn>
+		struct IsCompatibleReturn<void, ActualReturn> : std::is_void<ActualReturn> {};
+
+		template <typename Function, typename ReturnType, typename... EventParameters>
+		concept FunctionHasValidReturnType =
+		IsCompatibleReturn<ReturnType, std::invoke_result_t<Function, EventParameters...>>::value;
 
 		template <typename Function, typename ReturnType, typename... EventParameters>
 		concept IsValidFunction = (

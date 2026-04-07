@@ -58,9 +58,9 @@ if (MSVC)
 else()
 	target_compile_options(
 		${PROJECT_NAME} PUBLIC
-		"-Wall" "-Wextra" "-Wpedantic"
-		"-Wno-dollar-in-identifier-extension"
 		"-Werror"
+		"-Wall" "-Wextra" "-Wpedantic" "-Wconversion" "-Wshadow" "-Wnull-dereference" "-Wdouble-promotion"
+		"-Wno-dollar-in-identifier-extension" "-Wno-c99-designator"
 	)
 endif()
 

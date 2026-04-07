@@ -326,7 +326,7 @@ int displayToPosition(UnlockType unlockType, int item) {
 	if (item == 0) return 0;
 
 	std::vector<int>::iterator p = std::find(iconKitState.acceptedIcons[unlockType].begin(), iconKitState.acceptedIcons[unlockType].end(), item);
-	if (p != iconKitState.acceptedIcons[unlockType].end()) return p - iconKitState.acceptedIcons[unlockType].begin() + 1;
+	if (p != iconKitState.acceptedIcons[unlockType].end()) return int(p - iconKitState.acceptedIcons[unlockType].begin()) + 1;
 
 	int delta = 0;
 	if (iconKitState.settings.separateAcceptedFromDenied)
@@ -334,7 +334,7 @@ int displayToPosition(UnlockType unlockType, int item) {
 
 	p = std::find(iconKitState.deniedIcons[unlockType].begin(), iconKitState.deniedIcons[unlockType].end(), item);
 	if (iconKitState.settings.showDenied && p != iconKitState.deniedIcons[unlockType].end())
-		return int(p - iconKitState.deniedIcons[unlockType].begin() + iconKitState.acceptedIcons[unlockType].size() + delta + 1);
+		return int(p - iconKitState.deniedIcons[unlockType].begin() + int(iconKitState.acceptedIcons[unlockType].size()) + delta + 1);
 
 	return 0;
 }
@@ -359,7 +359,7 @@ int getActiveIconPage(IconType iconType) {
 		int moreIconsSpecialPagePad = 0;
 		// ship fires come after special pages since MI v2.0.7, so we additionally pad by the special page count for that
 		if (iconType == IconType::ShipFire)
-			moreIconsSpecialPagePad = 36*((more_icons::getIcons(IconType::Special)->size() + 35)/36);
+			moreIconsSpecialPagePad = 36*((int(more_icons::getIcons(IconType::Special)->size()) + 35)/36);
 		int moreIconsIconPosition = int(icon - more_icons::getIcons(iconType)->data()) + 1;
 		return (vanillaPagePad + moreIconsSpecialPagePad + moreIconsIconPosition - 1)/36;
 	} else if (secondPlayerSelected) {
@@ -396,7 +396,7 @@ int getPageCountForType(IconType iconType) {
 
 	int moreIconsPageCount = 0;
 	if (std::vector<IconInfo>* result = more_icons::getIcons(iconType))
-		moreIconsPageCount = ((result->size() + 35)/36);
+		moreIconsPageCount = ((int(result->size()) + 35)/36);
 	// see comment in getActiveIconPage
 	if (iconType == IconType::Special)
 		if (std::vector<IconInfo>* result = more_icons::getIcons(IconType::ShipFire))
