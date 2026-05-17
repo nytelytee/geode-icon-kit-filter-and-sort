@@ -1,3 +1,7 @@
+# v1.2.2
+- move cube 467 into Gauntlet category
+- move cube 435 into Wraith Chest category
+
 # v1.2.1
 - move cube 370 into Wraith Chest category
 
